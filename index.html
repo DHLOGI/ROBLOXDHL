@@ -13,6 +13,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Desplazamiento suave al hacer clic en el menú */
+        html {
+            scroll-behavior: smooth;
+        }
+
         header {
             background-color: #E8B63E;
             display: flex;
@@ -20,10 +25,14 @@
             align-items: center;
             padding: 0 40px;
             height: 90px;
+            position: sticky; /* Mantiene la cabecera arriba al hacer scroll */
+            top: 0;
+            z-index: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .logo-container img {
-            height: 135px; /* Altura aumentada para que el logo se vea mucho más grande */
+            height: 175px;
             object-fit: contain;
         }
 
@@ -67,7 +76,7 @@
 
         /* Logged In User Profile */
         .user-profile {
-            display: none; /* Oculto por defecto hasta iniciar sesión */
+            display: none;
             align-items: center;
             gap: 12px;
             position: relative;
@@ -84,7 +93,6 @@
             object-fit: cover;
         }
 
-        /* Logout Dropdown */
         .dropdown {
             display: none;
             position: absolute;
@@ -105,7 +113,7 @@
         .dropdown a {
             display: block;
             padding: 12px 20px;
-            color: #d83c3e; /* Color rojo para el logout */
+            color: #d83c3e;
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
@@ -123,24 +131,107 @@
             background-position: center;
             background-repeat: no-repeat;
         }
-        /* Estilos del Cuadro Flotante (Modal) */
+
+        /* ========================================= */
+        /* NUEVAS SECCIONES DE CONTENIDO Y TARJETAS  */
+        /* ========================================= */
+        
+        .content-section {
+            padding: 80px 40px;
+            background-color: #f9f9f9; /* Fondo gris claro para contrastar con las tarjetas amarillas */
+            min-height: 50vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: #ad1b45; /* Color del texto del título */
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        /* ESTILO DEL CUADRO (CARD) SOLICITADO */
+        .dhl-card {
+            background-color: #E8B63E; /* Fondo de cabecera */
+            border: 4px solid #ad1b45; /* Contorno */
+            color: #ad1b45; /* Texto */
+            padding: 30px;
+            border-radius: 12px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .dhl-card:hover {
+            transform: translateY(-10px); /* Efecto de flotar al pasar el ratón */
+        }
+
+        .dhl-card i {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .dhl-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .dhl-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 600;
+            margin-bottom: 25px;
+            flex-grow: 1; /* Empuja el botón hacia abajo */
+        }
+
+        /* ESTILO DE BOTÓN DENTRO DE LOS CUADROS */
+        .dhl-card button {
+            background-color: transparent;
+            color: #ad1b45;
+            border: 2px solid #ad1b45;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dhl-card button:hover {
+            background-color: #ad1b45;
+            color: #E8B63E;
+        }
+
+        /* Estilos del Cuadro Flotante (Modal) original */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+            background-color: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000; /* Asegura que esté por encima de todo */
+            z-index: 1000;
         }
 
         .modal-content {
-            background-color: #E8B63E; /* Mismo amarillo de la cabecera */
-            border: 4px solid #ad1b45; /* Contorno personalizado */
-            color: #ad1b45; /* Color del texto */
+            background-color: #E8B63E;
+            border: 4px solid #ad1b45;
+            color: #ad1b45;
             padding: 30px 40px;
             border-radius: 12px;
             max-width: 500px;
@@ -148,62 +239,38 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .modal-content h2 {
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-
-        .modal-content p {
-            margin-bottom: 15px;
-            font-size: 15px;
-            line-height: 1.6;
-            font-weight: 600;
-        }
-
+        .modal-content h2 { margin-bottom: 15px; font-size: 24px; }
+        .modal-content p { margin-bottom: 15px; font-size: 15px; line-height: 1.6; font-weight: 600; }
         .modal-content button {
-            background-color: transparent;
-            color: #ad1b45;
-            border: 2px solid #ad1b45;
-            padding: 10px 40px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            background-color: transparent; color: #ad1b45; border: 2px solid #ad1b45;
+            padding: 10px 40px; font-size: 16px; font-weight: bold; border-radius: 25px;
+            cursor: pointer; transition: all 0.3s ease; margin-top: 10px;
         }
-
-        .modal-content button:hover {
-            background-color: #ad1b45; /* Fondo cambia al color del borde */
-            color: #E8B63E; /* Texto cambia al amarillo */
-        }
+        .modal-content button:hover { background-color: #ad1b45; color: #E8B63E; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-container">
-            <!-- Nuevo logo implementado -->
             <img src="https://i.postimg.cc/pdjV9tDM/6111-removebg-preview.png" alt="DHL Logo">
         </div>
 
         <nav>
-            <a href="#">About us</a>
-            <a href="#">Fleet</a>
-            <a href="#">Available Careers</a>
-            <a href="#">Meet our team</a>
+            <!-- ENLACES ACTUALIZADOS PARA NAVEGAR A LAS SECCIONES -->
+            <a href="#about">About us</a>
+            <a href="#fleet">Fleet</a>
+            <a href="#careers">Available Careers</a>
+            <a href="#team">Meet our team</a>
         </nav>
 
-        <!-- Botón de Login (Visible por defecto) -->
         <a id="login-btn" class="discord-btn" href="#">
             <i class="fa-brands fa-discord"></i> Login With Discord
         </a>
 
-        <!-- Perfil de Usuario (Oculto por defecto) -->
         <div id="user-profile" class="user-profile">
             <span id="username-display">Username</span>
             <img id="user-avatar" src="" alt="User Avatar">
-            
             <div id="dropdown-menu" class="dropdown">
                 <a href="#" id="logout-btn">
                     <i class="fa-solid fa-right-from-bracket"></i> Logout
@@ -213,11 +280,93 @@
     </header>
 
     <main>
+        <!-- Imagen Principal -->
         <section class="hero"></section>
-    
+
+        <!-- SECCIÓN: ABOUT US -->
+        <section id="about" class="content-section">
+            <h2 class="section-title">About Us</h2>
+            <div class="cards-container">
+                <div class="dhl-card">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <h3>Our Mission</h3>
+                    <p>We aim to provide the most realistic, professional, and exciting cargo roleplay experience within the Roblox aviation community.</p>
+                    <button>Read More</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>Global Operations</h3>
+                    <p>Connecting players across different virtual continents with daily flights, precise logistics, and a highly active community.</p>
+                    <button>Our Routes</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: FLEET -->
+        <section id="fleet" class="content-section" style="background-color: #ffffff;">
+            <h2 class="section-title">Our Fleet</h2>
+            <div class="cards-container">
+                <div class="dhl-card">
+                    <i class="fa-solid fa-plane"></i>
+                    <h3>Boeing 757-200F</h3>
+                    <p>The backbone of our heavy cargo operations. Capable of carrying large payloads across long distances with excellent efficiency.</p>
+                    <button>View Details</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-truck"></i>
+                    <h3>Delivery Vans</h3>
+                    <p>Perfect for ground operations and local distribution. Ensures that every package goes straight from the runway to the customer's door.</p>
+                    <button>View Details</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: AVAILABLE CAREERS -->
+        <section id="careers" class="content-section">
+            <h2 class="section-title">Available Careers</h2>
+            <div class="cards-container">
+                <div class="dhl-card">
+                    <i class="fa-solid fa-headset"></i>
+                    <h3>Flight Dispatcher</h3>
+                    <p>Control the skies. Assign routes, monitor weather conditions, and ensure the safety of all our virtual flights.</p>
+                    <button>Apply Now</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-plane-up"></i>
+                    <h3>Cargo Pilot</h3>
+                    <p>Take control of our heavy aircraft. Fly worldwide routes and deliver critical supplies on time, every time.</p>
+                    <button>Apply Now</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-box-open"></i>
+                    <h3>Ground Crew</h3>
+                    <p>Load and unload cargo efficiently. Drive our iconic yellow trucks and keep the logistics chain moving flawlessly.</p>
+                    <button>Apply Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: MEET OUR TEAM -->
+        <section id="team" class="content-section" style="background-color: #ffffff;">
+            <h2 class="section-title">Meet Our Team</h2>
+            <div class="cards-container">
+                <div class="dhl-card">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <h3>CEO & Founder</h3>
+                    <p>Oversees the entire virtual airline, ensures quality roleplay, and plans future updates for the community.</p>
+                    <button>Contact</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <h3>Staff Managers</h3>
+                    <p>Responsible for training new pilots, reviewing applications, and moderating our Discord community server.</p>
+                    <button>Contact</button>
+                </div>
+            </div>
+        </section>
     </main>
 
-<!-- Cuadro flotante de Privacidad y Advertencia -->
+    <!-- Cuadro flotante de Privacidad y Advertencia -->
     <div id="privacy-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>Disclaimer & Privacy Consent</h2>
@@ -229,18 +378,9 @@
     </div>
 
     <script>
-        // ==========================================
         // CONFIGURACIÓN DE DISCORD OAUTH2 (FRONTEND)
-        // ==========================================
-        
-        // 1. Reemplaza 'TU_CLIENT_ID' con el Client ID de tu bot en Discord Developer Portal
         const clientId = '1529215900673380514'; 
-             
-        // 2. Reemplaza esta URL con la dirección exacta donde estás abriendo tu página
-        // Ejemplo: 'http://127.0.0.1:5500/index.html' o 'https://tusitio.com'
         const redirectUri = encodeURIComponent('https://dhlogi.github.io/DHL/index.html'); 
-
-        // ==========================================
 
         const loginBtn = document.getElementById('login-btn');
         const userProfile = document.getElementById('user-profile');
@@ -249,31 +389,22 @@
         const dropdownMenu = document.getElementById('dropdown-menu');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // Generar la URL de autorización de Discord
         loginBtn.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
 
-        // Extraer el token de acceso de la URL si el usuario acaba de iniciar sesión
         const fragment = new URLSearchParams(window.location.hash.slice(1));
         const accessToken = fragment.get('access_token');
 
         if (accessToken) {
-            // Si hay un token, solicitar la información del usuario a Discord
             fetch('https://discord.com/api/users/@me', {
-                headers: {
-                    authorization: `Bearer ${accessToken}`,
-                },
+                headers: { authorization: `Bearer ${accessToken}` },
             })
             .then(response => response.json())
             .then(data => {
-                // Ocultar botón de login y mostrar perfil
                 loginBtn.style.display = 'none';
                 userProfile.style.display = 'flex';
-
-                // Mostrar nombre y foto real
                 usernameDisplay.textContent = data.username;
                 const avatarHash = data.avatar;
                 
-                // Si el usuario no tiene foto de perfil, Discord usa una por defecto
                 if (avatarHash) {
                     userAvatar.src = `https://cdn.discordapp.com/avatars/${data.id}/${avatarHash}.png`;
                 } else {
@@ -284,37 +415,28 @@
             .catch(console.error);
         }
 
-        // Lógica para mostrar/ocultar el menú de Logout
         userProfile.addEventListener('click', () => {
             dropdownMenu.classList.toggle('show');
         });
 
-        // Cerrar menú si se hace clic fuera de él
         document.addEventListener('click', (event) => {
             if (!userProfile.contains(event.target)) {
                 dropdownMenu.classList.remove('show');
             }
         });
 
-        // Lógica del botón Logout
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Limpiar la URL borrando el token de acceso
             window.history.replaceState(null, null, window.location.pathname);
-            
-            // Restaurar la interfaz al estado original
             userProfile.style.display = 'none';
             loginBtn.style.display = 'flex';
             dropdownMenu.classList.remove('show');
         });
-        // ==========================================
+
         // LÓGICA DEL CUADRO FLOTANTE (MODAL)
-        // ==========================================
         const privacyModal = document.getElementById('privacy-modal');
         const acceptBtn = document.getElementById('accept-btn');
 
-        // Ocultar el cuadro cuando se presiona "Accept"
         acceptBtn.addEventListener('click', () => {
             privacyModal.style.display = 'none';
         });
