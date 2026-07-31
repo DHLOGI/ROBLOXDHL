@@ -256,7 +256,7 @@
             color: #E8B63E;
         }
 
-        /* Modal de Privacidad */
+        /* Modal de Privacidad y Aplicaciones */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -271,7 +271,7 @@
             text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .modal-content h2 { margin-bottom: 15px; font-size: 24px; }
+        .modal-content h2 { margin-bottom: 15px; font-size: 24px; font-weight: 900; text-transform: uppercase; }
         .modal-content p { margin-bottom: 15px; font-size: 15px; line-height: 1.6; font-weight: 600; }
         .modal-content button {
             background-color: transparent; color: #ad1b45; border: 2px solid #ad1b45;
@@ -560,31 +560,31 @@
                     <i class="fa-solid fa-sitemap"></i>
                     <h3>Director of Operations</h3>
                     <p>In charge of hiring/firing pilots, assigning strategic routes, communicating with the Founder, managing company resources (bot monitoring), and overseeing general operations.</p>
-                    <button>Apply Now</button>
+                    <button class="apply-btn">Apply Now</button>
                 </div>
                 <div class="dhl-card">
                     <i class="fa-solid fa-shield-halved"></i>
                     <h3>Director of Moderators</h3>
                     <p>Responsible for maintaining server integrity. Monitors the community, and handles the hiring, training, and firing of server moderators.</p>
-                    <button>Apply Now</button>
+                    <button class="apply-btn">Apply Now</button>
                 </div>
                 <div class="dhl-card">
                     <i class="fa-solid fa-bullhorn"></i>
                     <h3>Director of Public Relations</h3>
                     <p>In charge of giving a positive image to the group, managing social media presence, and establishing relations with other servers and communities.</p>
-                    <button>Apply Now</button>
+                    <button class="apply-btn">Apply Now</button>
                 </div>
                 <div class="dhl-card">
                     <i class="fa-solid fa-users"></i>
                     <h3>Director of Human Resources</h3>
                     <p>Designs hiring strategies, manages compensation and performance, drives company culture and work environment, and ensures compliance with current legal regulations.</p>
-                    <button>Apply Now</button>
+                    <button class="apply-btn">Apply Now</button>
                 </div>
                 <div class="dhl-card">
                     <i class="fa-solid fa-plane-up"></i>
                     <h3>Cargo Pilot</h3>
                     <p>Take control of our heavy aircraft. Fly worldwide routes and deliver critical supplies on time, every time.</p>
-                    <button>Apply Now</button>
+                    <button class="apply-btn">Apply Now</button>
                 </div>
             </div>
         </section>
@@ -684,6 +684,15 @@
         </div>
     </div>
 
+    <!-- Cuadro flotante de Aplicaciones Cerradas -->
+    <div id="apply-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Applications Closed</h2>
+            <p>Can´t apply right now. Applications are closed</p>
+            <button id="close-apply-btn">Accept</button>
+        </div>
+    </div>
+
     <script>
         // CONFIGURACIÓN DE DISCORD OAUTH2 (FRONTEND)
         const clientId = '1529215900673380514'; 
@@ -745,6 +754,30 @@
         const acceptBtn = document.getElementById('accept-btn');
         acceptBtn.addEventListener('click', () => {
             privacyModal.style.display = 'none';
+        });
+
+        // LÓGICA DEL CUADRO FLOTANTE DE APLICACIONES CERRADAS
+        const applyModal = document.getElementById('apply-modal');
+        const applyButtons = document.querySelectorAll('.apply-btn');
+        const closeApplyBtn = document.getElementById('close-apply-btn');
+
+        applyButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                applyModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeApplyBtn.addEventListener('click', () => {
+            applyModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        applyModal.addEventListener('click', (e) => {
+            if (e.target === applyModal) {
+                applyModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
 
         // LÓGICA DEL DIRECTORIO DEL EQUIPO (MODAL ELEGANTE BLANCO)
