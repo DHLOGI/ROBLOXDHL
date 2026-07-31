@@ -63,6 +63,33 @@
             opacity: 0.8;
         }
 
+        /* Contenedor para los botones de la derecha en la cabecera */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Botón de unirse a Discord en la cabecera */
+        .discord-join-header {
+            background-color: #5865F2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .discord-join-header:hover {
+            background-color: #4752c4;
+            transform: scale(1.05);
+        }
+
         /* Login Button */
         .discord-btn {
             background-color: #5865F2;
@@ -298,7 +325,7 @@
             gap: 40px;
             justify-content: center;
             margin-top: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .team-profile {
@@ -317,6 +344,12 @@
             object-fit: cover;
             margin-bottom: 20px;
             box-shadow: 0 8px 15px rgba(173, 27, 69, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .team-profile img:hover {
+            transform: scale(1.05);
         }
 
         .team-profile h3 {
@@ -337,31 +370,106 @@
             text-align: center;
         }
 
-        /* Botón de unirse al servidor de Discord dentro del modal */
-        .discord-join-container {
-            text-align: center;
-            margin-top: 20px;
-            border-top: 2px solid #f0f0f0;
-            padding-top: 30px;
-        }
-
-        .discord-join-btn {
-            background-color: #5865F2;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 14px 35px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 18px;
-            display: inline-flex;
+        /* Modal Individual de Perfil del Usuario */
+        .profile-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            justify-content: center;
             align-items: center;
-            gap: 12px;
-            transition: background-color 0.3s, transform 0.2s;
+            padding: 20px;
         }
 
-        .discord-join-btn:hover {
-            background-color: #4752c4;
-            transform: scale(1.05);
+        .profile-modal-content {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 15px;
+            padding: 40px 50px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 2px solid #ad1b45;
+            color: #333333;
+        }
+
+        .close-profile-btn {
+            position: absolute;
+            top: 20px; right: 30px;
+            font-size: 35px;
+            color: #ad1b45;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .close-profile-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .profile-header-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .profile-header-info img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #ad1b45;
+            object-fit: cover;
+            box-shadow: 0 6px 15px rgba(173, 27, 69, 0.2);
+        }
+
+        .profile-details h2 {
+            font-size: 30px;
+            color: #333333;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .profile-details .user-role {
+            font-family: 'Georgia', serif;
+            color: #ad1b45;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .profile-details .quote-msg {
+            font-style: italic;
+            font-size: 16px;
+            color: #555555;
+            font-weight: 600;
+        }
+
+        .profile-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 25px 0;
+        }
+
+        .profile-body-info h4 {
+            font-size: 18px;
+            color: #ad1b45;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .profile-body-info p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444444;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -379,17 +487,24 @@
             <a href="#team">Meet our team</a>
         </nav>
 
-        <a id="login-btn" class="discord-btn" href="#">
-            <i class="fa-brands fa-discord"></i> Login With Discord
-        </a>
+        <!-- Botones de la derecha en la cabecera (Join Discord + Login / Usuario) -->
+        <div class="header-actions">
+            <a href="https://discord.gg/2Vvb87kugf" target="_blank" class="discord-join-header">
+                <i class="fa-brands fa-discord"></i> Join Discord
+            </a>
 
-        <div id="user-profile" class="user-profile">
-            <span id="username-display">Username</span>
-            <img id="user-avatar" src="" alt="User Avatar">
-            <div id="dropdown-menu" class="dropdown">
-                <a href="#" id="logout-btn">
-                    <i class="fa-solid fa-right-from-bracket"></i> Logout
-                </a>
+            <a id="login-btn" class="discord-btn" href="#">
+                <i class="fa-brands fa-discord"></i> Login With Discord
+            </a>
+
+            <div id="user-profile" class="user-profile">
+                <span id="username-display">Username</span>
+                <img id="user-avatar" src="" alt="User Avatar">
+                <div id="dropdown-menu" class="dropdown">
+                    <a href="#" id="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -496,47 +611,60 @@
             <div class="team-profiles-container">
                 <!-- Founder (Camping_n) -->
                 <div class="team-profile">
-                    <img src="https://i.postimg.cc/26L3mZ5Z/image.png" alt="Founder">
+                    <img src="https://i.postimg.cc/26L3mZ5Z/image.png" alt="Founder" class="profile-trigger" data-user="founder">
                     <h3>Camping_n</h3>
                     <span class="role-cursive">Founder</span>
                 </div>
                 <!-- CEO (Available) -->
                 <div class="team-profile">
-                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Available Profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Available Profile" class="profile-trigger" data-user="ceo">
                     <h3>Available</h3>
                     <span class="role-cursive">CEO</span>
                 </div>
                 <!-- Director of Operations -->
                 <div class="team-profile">
-                    <img src="https://cdn.discordapp.com/embed/avatars/1.png" alt="Available Profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/1.png" alt="Available Profile" class="profile-trigger" data-user="operations">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Operations</span>
                 </div>
                 <!-- Director of Moderators -->
                 <div class="team-profile">
-                    <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Available Profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Available Profile" class="profile-trigger" data-user="moderators">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Moderators</span>
                 </div>
                 <!-- Director of Public Relations -->
                 <div class="team-profile">
-                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Available Profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Available Profile" class="profile-trigger" data-user="pr">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Public Relations</span>
                 </div>
                 <!-- Director of Human Resources -->
                 <div class="team-profile">
-                    <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Available Profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Available Profile" class="profile-trigger" data-user="hr">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Human Resources</span>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Botón de unirse al Discord -->
-            <div class="discord-join-container">
-                <a href="https://discord.gg/2Vvb87kugf" target="_blank" class="discord-join-btn">
-                    <i class="fa-brands fa-discord"></i> Join our Discord Server
-                </a>
+    <!-- Modal Individual Dinámico para cada Usuario -->
+    <div id="profile-modal" class="profile-modal-overlay">
+        <div class="profile-modal-content">
+            <button class="close-profile-btn" id="close-profile-btn">&times;</button>
+            <div class="profile-header-info">
+                <img id="modal-user-avatar" src="" alt="Avatar">
+                <div class="profile-details">
+                    <h2 id="modal-user-name"></h2>
+                    <div id="modal-user-role" class="user-role"></div>
+                    <div id="modal-user-msg1" class="quote-msg"></div>
+                </div>
+            </div>
+            <div class="profile-divider"></div>
+            <div class="profile-body-info">
+                <h4>Role Function & Description</h4>
+                <p id="modal-user-msg2"></p>
             </div>
         </div>
     </div>
@@ -634,6 +762,94 @@
             if (e.target === teamModal) {
                 teamModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
+            }
+        });
+
+        // BASE DE DATOS DE INFORMACIÓN DE CADA USUARIO DEL EQUIPO DIRECTIVO
+        const teamData = {
+            founder: {
+                name: "Camping_n",
+                role: "Founder",
+                avatar: "https://i.postimg.cc/26L3mZ5Z/image.png",
+                msg1: "\"Wow you are reading this, I´m N the great founder of DHL. Nice to met you ;)\"",
+                msg2: "Why it is so hard, glad im the founder."
+            },
+            ceo: {
+                name: "Available",
+                role: "CEO",
+                avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
+                msg1: "\"Blank. Nothing to see here hehe\"",
+                msg2: "Blank. Nothing to see here hehe"
+            },
+            operations: {
+                name: "Available",
+                role: "Director of Operations",
+                avatar: "https://cdn.discordapp.com/embed/avatars/1.png",
+                msg1: "\"Blank. Nothing to see here hehe\"",
+                msg2: "Blank. Nothing to see here hehe"
+            },
+            moderators: {
+                name: "Available",
+                role: "Director of Moderators",
+                avatar: "https://cdn.discordapp.com/embed/avatars/2.png",
+                msg1: "\"Blank. Nothing to see here hehe\"",
+                msg2: "Blank. Nothing to see here hehe"
+            },
+            pr: {
+                name: "Available",
+                role: "Director of Public Relations",
+                avatar: "https://cdn.discordapp.com/embed/avatars/3.png",
+                msg1: "\"Blank. Nothing to see here hehe\"",
+                msg2: "Blank. Nothing to see here hehe"
+            },
+            hr: {
+                name: "Available",
+                role: "Director of Human Resources",
+                avatar: "https://cdn.discordapp.com/embed/avatars/4.png",
+                msg1: "\"Blank. Nothing to see here hehe\"",
+                msg2: "Blank. Nothing to see here hehe"
+            }
+        };
+
+        // LÓGICA DE LOS MODALES INDIVIDUALES DE CADA USUARIO
+        const profileModal = document.getElementById('profile-modal');
+        const closeProfileBtn = document.getElementById('close-profile-btn');
+        const profileTriggers = document.querySelectorAll('.profile-trigger');
+
+        const modalUserAvatar = document.getElementById('modal-user-avatar');
+        const modalUserName = document.getElementById('modal-user-name');
+        const modalUserRole = document.getElementById('modal-user-role');
+        const modalUserMsg1 = document.getElementById('modal-user-msg1');
+        const modalUserMsg2 = document.getElementById('modal-user-msg2');
+
+        profileTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const userId = trigger.getAttribute('data-user');
+                const info = teamData[userId];
+
+                if (info) {
+                    modalUserAvatar.src = info.avatar;
+                    modalUserName.textContent = info.name;
+                    modalUserRole.textContent = info.role;
+                    modalUserMsg1.textContent = info.msg1;
+                    modalUserMsg2.textContent = info.msg2;
+
+                    // Ocultamos temporalmente el modal de equipo para mostrar el perfil individual de forma limpia
+                    teamModal.style.display = 'none';
+                    profileModal.style.display = 'flex';
+                }
+            });
+        });
+
+        closeProfileBtn.addEventListener('click', () => {
+            profileModal.style.display = 'none';
+            teamModal.style.display = 'flex'; // Regresa al cuadro del equipo directivo
+        });
+
+        profileModal.addEventListener('click', (e) => {
+            if (e.target === profileModal) {
+                profileModal.style.display = 'none';
+                teamModal.style.display = 'flex';
             }
         });
     </script>
