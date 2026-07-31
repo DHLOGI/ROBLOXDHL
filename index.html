@@ -664,8 +664,11 @@
             </div>
             <div class="profile-divider"></div>
             <div class="profile-body-info">
-                <h4>Role Function & Description</h4>
+                <h4>Role Function</h4>
                 <p id="modal-user-msg2"></p>
+                <div style="width: 100%; height: 1px; background-color: #e0e0e0; margin: 20px 0;"></div>
+                <h4>Description</h4>
+                <p id="modal-user-msg3"></p>
             </div>
         </div>
     </div>
@@ -773,42 +776,48 @@
                 role: "Founder",
                 avatar: "https://i.postimg.cc/26L3mZ5Z/image.png",
                 msg1: "\"Wow you are reading this, I´m N the great founder of DHL. Nice to met you ;)\"",
-                msg2: "Conceive the business idea, establish the strategic foundations, and turn the project into a viable entity. Why it is so hard, glad im the founder."
+                msg2: "Conceive the business idea, establish the strategic foundations, and turn the project into a viable entity.",
+                msg3: "Why it is so hard, glad im the founder."
             },
             ceo: {
                 name: "Available",
                 role: "CEO",
                 avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "The highest authority in the management of a company, responsible for defining the overall strategy, making key decisions, and leading the executive teams. Oh yes, not here either."
+                msg2: "The highest authority in the management of a company, responsible for defining the overall strategy, making key decisions, and leading the executive teams.",
+                msg3: "Oh yes, not here either."
             },
             operations: {
                 name: "Available",
                 role: "Director of Operations",
                 avatar: "https://cdn.discordapp.com/embed/avatars/1.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "Manages daily activities, optimizes internal processes, and aligns company resources. Oh yes, not here either."
+                msg2: "Manages daily activities, optimizes internal processes, and aligns company resources.",
+                msg3: "Oh yes, not here either."
             },
             moderators: {
                 name: "Available",
                 role: "Director of Moderators",
                 avatar: "https://cdn.discordapp.com/embed/avatars/2.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "The person responsible for leading teams of moderators, hiring and firing, and defining large-scale strategies for a digital platform or community. Oh yes, not here either."
+                msg2: "The person responsible for leading teams of moderators, hiring and firing, and defining large-scale strategies for a digital platform or community.",
+                msg3: "Oh yes, not here either."
             },
             pr: {
                 name: "Available",
                 role: "Director of Public Relations",
                 avatar: "https://cdn.discordapp.com/embed/avatars/3.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "A leader responsible for creating, protecting, and enhancing a company's public image and reputation. Key responsibilities include designing communication strategies, leading media relations, and managing crisis situations. Oh yes, not here either."
+                msg2: "A leader responsible for creating, protecting, and enhancing a company's public image and reputation. Key responsibilities include designing communication strategies, leading media relations, and managing crisis situations.",
+                msg3: "Oh yes, not here either."
             },
             hr: {
                 name: "Available",
                 role: "Director of Human Resources",
                 avatar: "https://cdn.discordapp.com/embed/avatars/4.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "Leads a company's human talent strategy, encompassing workforce planning, recruitment, and organizational development. Oh yes, not here either."
+                msg2: "Leads a company's human talent strategy, encompassing workforce planning, recruitment, and organizational development.",
+                msg3: "Oh yes, not here either."
             }
         };
 
@@ -822,6 +831,7 @@
         const modalUserRole = document.getElementById('modal-user-role');
         const modalUserMsg1 = document.getElementById('modal-user-msg1');
         const modalUserMsg2 = document.getElementById('modal-user-msg2');
+        const modalUserMsg3 = document.getElementById('modal-user-msg3');
 
         profileTriggers.forEach(trigger => {
             trigger.addEventListener('click', () => {
@@ -834,6 +844,7 @@
                     modalUserRole.textContent = info.role;
                     modalUserMsg1.textContent = info.msg1;
                     modalUserMsg2.textContent = info.msg2;
+                    modalUserMsg3.textContent = info.msg3;
 
                     // Ocultamos temporalmente el modal de equipo para mostrar el perfil individual de forma limpia
                     teamModal.style.display = 'none';
