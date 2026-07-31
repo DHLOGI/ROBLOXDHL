@@ -13,7 +13,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Desplazamiento suave al hacer clic en el menú */
         html {
             scroll-behavior: smooth;
         }
@@ -25,15 +24,26 @@
             align-items: center;
             padding: 0 40px;
             height: 90px;
-            position: sticky; /* Mantiene la cabecera arriba al hacer scroll */
+            position: sticky;
             top: 0;
             z-index: 500;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
+        /* Logo ahora es clickeable */
+        .logo-container {
+            display: block;
+            cursor: pointer;
+        }
+
         .logo-container img {
-            height: 175px;
+            height: 135px;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container:hover img {
+            transform: scale(1.05);
         }
 
         nav {
@@ -132,20 +142,16 @@
             background-repeat: no-repeat;
         }
 
-        /* ========================================= */
-        /* NUEVAS SECCIONES DE CONTENIDO Y TARJETAS  */
-        /* ========================================= */
-        
         .content-section {
             padding: 80px 40px;
-            background-color: #f9f9f9; /* Fondo gris claro para contrastar con las tarjetas amarillas */
+            background-color: #f9f9f9;
             min-height: 50vh;
         }
 
         .section-title {
             text-align: center;
             font-size: 36px;
-            color: #ad1b45; /* Color del texto del título */
+            color: #ad1b45;
             margin-bottom: 50px;
             text-transform: uppercase;
             font-weight: 900;
@@ -158,11 +164,11 @@
             justify-content: center;
         }
 
-        /* ESTILO DEL CUADRO (CARD) SOLICITADO */
+        /* Estilo de los cuadros amarillos */
         .dhl-card {
-            background-color: #E8B63E; /* Fondo de cabecera */
-            border: 4px solid #ad1b45; /* Contorno */
-            color: #ad1b45; /* Texto */
+            background-color: #E8B63E;
+            border: 4px solid #ad1b45;
+            color: #ad1b45;
             padding: 30px;
             border-radius: 12px;
             width: 320px;
@@ -174,7 +180,7 @@
         }
 
         .dhl-card:hover {
-            transform: translateY(-10px); /* Efecto de flotar al pasar el ratón */
+            transform: translateY(-10px);
         }
 
         .dhl-card i {
@@ -182,21 +188,30 @@
             margin-bottom: 20px;
         }
 
+        /* Imagen de flota dentro del cuadro */
+        .fleet-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ad1b45;
+            margin-bottom: 15px;
+        }
+
         .dhl-card h3 {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 15px;
             font-weight: 800;
         }
 
         .dhl-card p {
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
             font-weight: 600;
             margin-bottom: 25px;
-            flex-grow: 1; /* Empuja el botón hacia abajo */
+            flex-grow: 1;
         }
 
-        /* ESTILO DE BOTÓN DENTRO DE LOS CUADROS */
         .dhl-card button {
             background-color: transparent;
             color: #ad1b45;
@@ -214,29 +229,19 @@
             color: #E8B63E;
         }
 
-        /* Estilos del Cuadro Flotante (Modal) original */
+        /* Cuadro Flotante (Modal) de Privacidad */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             z-index: 1000;
         }
 
         .modal-content {
-            background-color: #E8B63E;
-            border: 4px solid #ad1b45;
-            color: #ad1b45;
-            padding: 30px 40px;
-            border-radius: 12px;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background-color: #E8B63E; border: 4px solid #ad1b45; color: #ad1b45;
+            padding: 30px 40px; border-radius: 12px; max-width: 500px;
+            text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         .modal-content h2 { margin-bottom: 15px; font-size: 24px; }
@@ -247,17 +252,103 @@
             cursor: pointer; transition: all 0.3s ease; margin-top: 10px;
         }
         .modal-content button:hover { background-color: #ad1b45; color: #E8B63E; }
+
+        /* =========================================================
+           NUEVO: MODAL ELEGANTE DEL EQUIPO DIRECTIVO (BLANCO)
+           ========================================================= */
+        .team-modal-overlay {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .team-modal-content {
+            background-color: #ffffff; /* Fondo blanco y elegante */
+            width: 100%;
+            max-width: 1200px;
+            max-height: 90vh; /* Permite scroll si la pantalla es pequeña */
+            overflow-y: auto;
+            border-radius: 15px;
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 2px solid #ad1b45; /* Toque corporativo sutil */
+        }
+
+        .close-team-btn {
+            position: absolute;
+            top: 20px; right: 30px;
+            font-size: 40px;
+            color: #ad1b45;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .close-team-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .team-profiles-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .team-profile {
+            text-align: center;
+            width: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .team-profile img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 5px solid #ad1b45; /* Círculo carmesí requerido */
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 15px rgba(173, 27, 69, 0.2);
+        }
+
+        .team-profile h3 {
+            font-size: 22px;
+            color: #333333;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .role-cursive {
+            font-family: 'Georgia', serif; /* Fuente más elegante para cursiva */
+            color: #ad1b45; /* Color carmesí requerido */
+            font-style: italic;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
     </style>
 </head>
-<body>
+<body id="top">
 
     <header>
-        <div class="logo-container">
+        <!-- Logo clickeable que lleva al id="top" (inicio de la página) -->
+        <a href="#top" class="logo-container">
             <img src="https://i.postimg.cc/pdjV9tDM/6111-removebg-preview.png" alt="DHL Logo">
-        </div>
+        </a>
 
         <nav>
-            <!-- ENLACES ACTUALIZADOS PARA NAVEGAR A LAS SECCIONES -->
             <a href="#about">About us</a>
             <a href="#fleet">Fleet</a>
             <a href="#careers">Available Careers</a>
@@ -280,10 +371,9 @@
     </header>
 
     <main>
-        <!-- Imagen Principal -->
         <section class="hero"></section>
 
-        <!-- SECCIÓN: ABOUT US -->
+        <!-- ABOUT US -->
         <section id="about" class="content-section">
             <h2 class="section-title">About Us</h2>
             <div class="cards-container">
@@ -291,44 +381,66 @@
                     <i class="fa-solid fa-plane-departure"></i>
                     <h3>Our Mission</h3>
                     <p>We aim to provide the most realistic, professional, and exciting cargo roleplay experience within the Roblox aviation community.</p>
-                    <button>Read More</button>
                 </div>
                 <div class="dhl-card">
                     <i class="fa-solid fa-globe"></i>
                     <h3>Global Operations</h3>
                     <p>Connecting players across different virtual continents with daily flights, precise logistics, and a highly active community.</p>
-                    <button>Our Routes</button>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN: FLEET -->
+        <!-- FLEET (SOLO AVIONES CON IMAGEN TEMPORAL) -->
         <section id="fleet" class="content-section" style="background-color: #ffffff;">
             <h2 class="section-title">Our Fleet</h2>
             <div class="cards-container">
                 <div class="dhl-card">
-                    <i class="fa-solid fa-plane"></i>
-                    <h3>Boeing 757-200F</h3>
+                    <!-- Cambia este link por el URL directo cuando lo tengas -->
+                    <img src="https://via.placeholder.com/400x200/E8B63E/ad1b45?text=B757+Image+Here" alt="B757" class="fleet-img">
+                    <h3>Boeing 757</h3>
                     <p>The backbone of our heavy cargo operations. Capable of carrying large payloads across long distances with excellent efficiency.</p>
-                    <button>View Details</button>
                 </div>
                 <div class="dhl-card">
-                    <i class="fa-solid fa-truck"></i>
-                    <h3>Delivery Vans</h3>
-                    <p>Perfect for ground operations and local distribution. Ensures that every package goes straight from the runway to the customer's door.</p>
-                    <button>View Details</button>
+                    <!-- Cambia este link por el URL directo cuando lo tengas -->
+                    <img src="https://via.placeholder.com/400x200/E8B63E/ad1b45?text=B727+Image+Here" alt="B727" class="fleet-img">
+                    <h3>Boeing 727</h3>
+                    <p>A classic trijet built for performance. Perfect for specific regional routes and rapid cargo deployment.</p>
+                </div>
+                <div class="dhl-card">
+                    <!-- Cambia este link por el URL directo cuando lo tengas -->
+                    <img src="https://via.placeholder.com/400x200/E8B63E/ad1b45?text=B737+Image+Here" alt="B737" class="fleet-img">
+                    <h3>Boeing 737</h3>
+                    <p>Our agile twin-engine freighter. Highly versatile for short to medium-haul cargo transport across our virtual network.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN: AVAILABLE CAREERS -->
+        <!-- AVAILABLE CAREERS (NUEVOS ROLES SOLICITADOS) -->
         <section id="careers" class="content-section">
             <h2 class="section-title">Available Careers</h2>
             <div class="cards-container">
                 <div class="dhl-card">
-                    <i class="fa-solid fa-headset"></i>
-                    <h3>Flight Dispatcher</h3>
-                    <p>Control the skies. Assign routes, monitor weather conditions, and ensure the safety of all our virtual flights.</p>
+                    <i class="fa-solid fa-sitemap"></i>
+                    <h3>Director of Operations</h3>
+                    <p>In charge of hiring/firing pilots, assigning strategic routes, communicating with the Founder, managing company resources (bot monitoring), and overseeing general operations.</p>
+                    <button>Apply Now</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>Director of Moderators</h3>
+                    <p>Responsible for maintaining server integrity. Monitors the community, and handles the hiring, training, and firing of server moderators.</p>
+                    <button>Apply Now</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <h3>Director of Public Relations</h3>
+                    <p>In charge of giving a positive image to the group, managing social media presence, and establishing relations with other servers and communities.</p>
+                    <button>Apply Now</button>
+                </div>
+                <div class="dhl-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>Director of Human Resources</h3>
+                    <p>Designs hiring strategies, manages compensation and performance, drives company culture and work environment, and ensures compliance with current legal regulations.</p>
                     <button>Apply Now</button>
                 </div>
                 <div class="dhl-card">
@@ -337,36 +449,68 @@
                     <p>Take control of our heavy aircraft. Fly worldwide routes and deliver critical supplies on time, every time.</p>
                     <button>Apply Now</button>
                 </div>
-                <div class="dhl-card">
-                    <i class="fa-solid fa-box-open"></i>
-                    <h3>Ground Crew</h3>
-                    <p>Load and unload cargo efficiently. Drive our iconic yellow trucks and keep the logistics chain moving flawlessly.</p>
-                    <button>Apply Now</button>
-                </div>
             </div>
         </section>
 
-        <!-- SECCIÓN: MEET OUR TEAM -->
+        <!-- MEET OUR TEAM (CUADRO INICIAL) -->
         <section id="team" class="content-section" style="background-color: #ffffff;">
             <h2 class="section-title">Meet Our Team</h2>
             <div class="cards-container">
                 <div class="dhl-card">
                     <i class="fa-solid fa-user-tie"></i>
-                    <h3>CEO & Founder</h3>
-                    <p>Oversees the entire virtual airline, ensures quality roleplay, and plans future updates for the community.</p>
-                    <button>Contact</button>
-                </div>
-                <div class="dhl-card">
-                    <i class="fa-solid fa-users-gear"></i>
-                    <h3>Staff Managers</h3>
-                    <p>Responsible for training new pilots, reviewing applications, and moderating our Discord community server.</p>
-                    <button>Contact</button>
+                    <h3>Executive Board</h3>
+                    <p>Discover the dedicated individuals behind the scenes who ensure our virtual airline operates flawlessly every single day.</p>
+                    <button id="open-team-btn">Meet Us</button>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Cuadro flotante de Privacidad y Advertencia -->
+    <!-- Modal Elegante del Directorio del Equipo -->
+    <div id="team-modal" class="team-modal-overlay">
+        <div class="team-modal-content">
+            <button class="close-team-btn" id="close-team-btn">&times;</button>
+            <h2 class="section-title">Executive Directory</h2>
+            
+            <div class="team-profiles-container">
+                <!-- Founder -->
+                <div class="team-profile">
+                    <img src="https://i.postimg.cc/26L3mZ5Z/image.png" alt="Founder">
+                    <h3>Camping_n</h3>
+                    <span class="role-cursive">Founder</span>
+                </div>
+                <!-- CEO -->
+                <div class="team-profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Available Profile">
+                    <h3>Available</h3>
+                    <span class="role-cursive">CEO</span>
+                </div>
+                <!-- Staff Managers -->
+                <div class="team-profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/1.png" alt="Available Profile">
+                    <h3>Available</h3>
+                    <span class="role-cursive">Director of Operations</span>
+                </div>
+                <div class="team-profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Available Profile">
+                    <h3>Available</h3>
+                    <span class="role-cursive">Director of Moderators</span>
+                </div>
+                <div class="team-profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Available Profile">
+                    <h3>Available</h3>
+                    <span class="role-cursive">Director of Public Relations</span>
+                </div>
+                <div class="team-profile">
+                    <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Available Profile">
+                    <h3>Available</h3>
+                    <span class="role-cursive">Director of Human Resources</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuadro flotante de Privacidad (Disclaimer) -->
     <div id="privacy-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>Disclaimer & Privacy Consent</h2>
@@ -380,7 +524,7 @@
     <script>
         // CONFIGURACIÓN DE DISCORD OAUTH2 (FRONTEND)
         const clientId = '1529215900673380514'; 
-        const redirectUri = encodeURIComponent('https://dhlogi.github.io/DHL/index.html'); 
+        const redirectUri = encodeURIComponent('https://dhlogi.github.io/ROBLOXDHL/index.html'); 
 
         const loginBtn = document.getElementById('login-btn');
         const userProfile = document.getElementById('user-profile');
@@ -433,12 +577,34 @@
             dropdownMenu.classList.remove('show');
         });
 
-        // LÓGICA DEL CUADRO FLOTANTE (MODAL)
+        // LÓGICA DEL CUADRO FLOTANTE (MODAL PRIVACIDAD)
         const privacyModal = document.getElementById('privacy-modal');
         const acceptBtn = document.getElementById('accept-btn');
-
         acceptBtn.addEventListener('click', () => {
             privacyModal.style.display = 'none';
+        });
+
+        // LÓGICA DEL DIRECTORIO DEL EQUIPO (MODAL ELEGANTE BLANCO)
+        const teamModal = document.getElementById('team-modal');
+        const openTeamBtn = document.getElementById('open-team-btn');
+        const closeTeamBtn = document.getElementById('close-team-btn');
+
+        openTeamBtn.addEventListener('click', () => {
+            teamModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Bloquea el scroll del fondo
+        });
+
+        closeTeamBtn.addEventListener('click', () => {
+            teamModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaura el scroll del fondo
+        });
+
+        // Cerrar si hace clic fuera del cuadro blanco
+        teamModal.addEventListener('click', (e) => {
+            if (e.target === teamModal) {
+                teamModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
     </script>
 </body>
