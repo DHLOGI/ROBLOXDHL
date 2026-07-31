@@ -30,14 +30,13 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Logo ahora es clickeable */
         .logo-container {
             display: block;
             cursor: pointer;
         }
 
         .logo-container img {
-            height: 135px;
+            height: 175px;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
@@ -164,7 +163,6 @@
             justify-content: center;
         }
 
-        /* Estilo de los cuadros amarillos */
         .dhl-card {
             background-color: #E8B63E;
             border: 4px solid #ad1b45;
@@ -188,7 +186,7 @@
             margin-bottom: 20px;
         }
 
-        /* Imagen de flota dentro del cuadro */
+        /* Imágenes reales de la flota */
         .fleet-img {
             width: 100%;
             height: 160px;
@@ -196,6 +194,7 @@
             border-radius: 8px;
             border: 2px solid #ad1b45;
             margin-bottom: 15px;
+            background-color: #ffffff;
         }
 
         .dhl-card h3 {
@@ -229,7 +228,7 @@
             color: #E8B63E;
         }
 
-        /* Cuadro Flotante (Modal) de Privacidad */
+        /* Modal de Privacidad */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -253,11 +252,9 @@
         }
         .modal-content button:hover { background-color: #ad1b45; color: #E8B63E; }
 
-        /* =========================================================
-           NUEVO: MODAL ELEGANTE DEL EQUIPO DIRECTIVO (BLANCO)
-           ========================================================= */
+        /* Modal Elegante del Equipo Directivo (Blanco) */
         .team-modal-overlay {
-            display: none; /* Oculto por defecto */
+            display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
@@ -268,16 +265,16 @@
         }
 
         .team-modal-content {
-            background-color: #ffffff; /* Fondo blanco y elegante */
+            background-color: #ffffff;
             width: 100%;
             max-width: 1200px;
-            max-height: 90vh; /* Permite scroll si la pantalla es pequeña */
+            max-height: 90vh;
             overflow-y: auto;
             border-radius: 15px;
             padding: 50px;
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            border: 2px solid #ad1b45; /* Toque corporativo sutil */
+            border: 2px solid #ad1b45;
         }
 
         .close-team-btn {
@@ -298,9 +295,10 @@
         .team-profiles-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 50px;
+            gap: 40px;
             justify-content: center;
             margin-top: 30px;
+            margin-bottom: 40px;
         }
 
         .team-profile {
@@ -315,7 +313,7 @@
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            border: 5px solid #ad1b45; /* Círculo carmesí requerido */
+            border: 5px solid #ad1b45; /* Círculo carmesí */
             object-fit: cover;
             margin-bottom: 20px;
             box-shadow: 0 8px 15px rgba(173, 27, 69, 0.2);
@@ -329,8 +327,8 @@
         }
 
         .role-cursive {
-            font-family: 'Georgia', serif; /* Fuente más elegante para cursiva */
-            color: #ad1b45; /* Color carmesí requerido */
+            font-family: 'Georgia', serif;
+            color: #ad1b45;
             font-style: italic;
             font-weight: bold;
             font-size: 16px;
@@ -338,12 +336,38 @@
             letter-spacing: 1px;
             text-align: center;
         }
+
+        /* Botón de unirse al servidor de Discord dentro del modal */
+        .discord-join-container {
+            text-align: center;
+            margin-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 30px;
+        }
+
+        .discord-join-btn {
+            background-color: #5865F2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .discord-join-btn:hover {
+            background-color: #4752c4;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body id="top">
 
     <header>
-        <!-- Logo clickeable que lleva al id="top" (inicio de la página) -->
         <a href="#top" class="logo-container">
             <img src="https://i.postimg.cc/pdjV9tDM/6111-removebg-preview.png" alt="DHL Logo">
         </a>
@@ -390,32 +414,29 @@
             </div>
         </section>
 
-        <!-- FLEET (SOLO AVIONES CON IMAGEN TEMPORAL) -->
+        <!-- FLEET (SOLO B757, B727, B737 CON SUS IMÁGENES REALES) -->
         <section id="fleet" class="content-section" style="background-color: #ffffff;">
             <h2 class="section-title">Our Fleet</h2>
             <div class="cards-container">
                 <div class="dhl-card">
-                    <!-- Cambia este link por el URL directo cuando lo tengas -->
-                    <img src="https://via.placeholder.com/400x200/E8B63E/ad1b45?text=B757+Image+Here" alt="B757" class="fleet-img">
+                    <img src="https://i.postimg.cc/pTWk6PVg/image.png" alt="Boeing 757" class="fleet-img">
                     <h3>Boeing 757</h3>
                     <p>The backbone of our heavy cargo operations. Capable of carrying large payloads across long distances with excellent efficiency.</p>
                 </div>
                 <div class="dhl-card">
-                    <!-- Cambia este link por el URL directo cuando lo tengas -->
-                    <img src="https://via.placeholder.com/400x200/E8B63E/ad1b45?text=B727+Image+Here" alt="B727" class="fleet-img">
+                    <img src="https://i.postimg.cc/htnCd8Fw/image.png" alt="Boeing 727" class="fleet-img">
                     <h3>Boeing 727</h3>
                     <p>A classic trijet built for performance. Perfect for specific regional routes and rapid cargo deployment.</p>
                 </div>
                 <div class="dhl-card">
-                    <!-- Cambia este link por el URL directo cuando lo tengas -->
-                    <img src="https://via.placeholder.com/400x200/E8B63E/ad1b45?text=B737+Image+Here" alt="B737" class="fleet-img">
+                    <img src="https://i.postimg.cc/bvWkQ8Dt/image.png" alt="Boeing 737" class="fleet-img">
                     <h3>Boeing 737</h3>
                     <p>Our agile twin-engine freighter. Highly versatile for short to medium-haul cargo transport across our virtual network.</p>
                 </div>
             </div>
         </section>
 
-        <!-- AVAILABLE CAREERS (NUEVOS ROLES SOLICITADOS) -->
+        <!-- AVAILABLE CAREERS -->
         <section id="careers" class="content-section">
             <h2 class="section-title">Available Careers</h2>
             <div class="cards-container">
@@ -452,7 +473,7 @@
             </div>
         </section>
 
-        <!-- MEET OUR TEAM (CUADRO INICIAL) -->
+        <!-- MEET OUR TEAM -->
         <section id="team" class="content-section" style="background-color: #ffffff;">
             <h2 class="section-title">Meet Our Team</h2>
             <div class="cards-container">
@@ -473,39 +494,49 @@
             <h2 class="section-title">Executive Directory</h2>
             
             <div class="team-profiles-container">
-                <!-- Founder -->
+                <!-- Founder (Camping_n) -->
                 <div class="team-profile">
                     <img src="https://i.postimg.cc/26L3mZ5Z/image.png" alt="Founder">
                     <h3>Camping_n</h3>
                     <span class="role-cursive">Founder</span>
                 </div>
-                <!-- CEO -->
+                <!-- CEO (Available) -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Available Profile">
                     <h3>Available</h3>
                     <span class="role-cursive">CEO</span>
                 </div>
-                <!-- Staff Managers -->
+                <!-- Director of Operations -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/1.png" alt="Available Profile">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Operations</span>
                 </div>
+                <!-- Director of Moderators -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Available Profile">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Moderators</span>
                 </div>
+                <!-- Director of Public Relations -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Available Profile">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Public Relations</span>
                 </div>
+                <!-- Director of Human Resources -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Available Profile">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Human Resources</span>
                 </div>
+            </div>
+
+            <!-- Botón de unirse al Discord -->
+            <div class="discord-join-container">
+                <a href="https://discord.gg/2Vvb87kugf" target="_blank" class="discord-join-btn">
+                    <i class="fa-brands fa-discord"></i> Join our Discord Server
+                </a>
             </div>
         </div>
     </div>
@@ -591,15 +622,14 @@
 
         openTeamBtn.addEventListener('click', () => {
             teamModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Bloquea el scroll del fondo
+            document.body.style.overflow = 'hidden';
         });
 
         closeTeamBtn.addEventListener('click', () => {
             teamModal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restaura el scroll del fondo
+            document.body.style.overflow = 'auto';
         });
 
-        // Cerrar si hace clic fuera del cuadro blanco
         teamModal.addEventListener('click', (e) => {
             if (e.target === teamModal) {
                 teamModal.style.display = 'none';
