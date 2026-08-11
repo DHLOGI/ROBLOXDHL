@@ -643,6 +643,19 @@
             pointer-events: none;
         }
 
+        /* Pantalla completa automática en móviles */
+        @media (max-width: 600px) {
+            .ai-chat-window {
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 100%;
+                max-height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+        }
+
         .ai-chat-window.show {
             transform: translateY(0);
             opacity: 1;
@@ -697,8 +710,10 @@
         #chat-config-view {
             display: none;
             padding: 30px;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 20px;
             background-color: #f1f1f1;
         }
 
@@ -802,6 +817,24 @@
         }
         .send-btn:hover {
             transform: scale(1.1);
+        }
+
+        /* Estilo Botón Reset Chat */
+        .reset-btn {
+            background-color: #ad1b45;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+        .reset-btn:hover {
+            background-color: #8c1335;
         }
 
         /* Switch Dark Mode Estilo iOS */
@@ -1114,7 +1147,7 @@
             </div>
         </div>
 
-        <!-- Vista de Configuración (Dark Mode Switch) -->
+        <!-- Vista de Configuración (Dark Mode Switch y Reset) -->
         <div id="chat-config-view">
             <div class="switch-container">
                 <span style="font-weight:bold; color:#ad1b45;">Dark Mode</span>
@@ -1123,6 +1156,7 @@
                     <span class="slider"></span>
                 </label>
             </div>
+            <button id="reset-chat-btn" class="reset-btn">Reset Chat</button>
         </div>
     </div>
 
@@ -1271,6 +1305,7 @@
         const chatMainView = document.getElementById('chat-main-view');
         const chatConfigView = document.getElementById('chat-config-view');
         const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const resetChatBtn = document.getElementById('reset-chat-btn');
 
         function toggleChat() {
             if (aiChatWindow.classList.contains('show')) {
@@ -1296,6 +1331,22 @@
 
         darkModeToggle.addEventListener('change', () => {
             aiChatWindow.classList.toggle('dark-theme');
+        });
+
+        // Reset Chat logic con confirmación
+        resetChatBtn.addEventListener('click', () => {
+            if(confirm('Are you sure you want to delete all chat history?')) {
+                chatBody.innerHTML = `
+                    <div class="chat-message bot-message">
+                        <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. Chat has been reset.</p>
+                    </div>
+                    <div class="quick-replies">
+                        <button><i class="fa-solid fa-search"></i> Track Shipment</button>
+                        <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
+                        <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
+                        <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
+                    </div>`;
+            }
         });
 
         function sendMessage() {
