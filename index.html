@@ -620,19 +620,19 @@
             transform: scale(1.08);
         }
 
-        /* --- VENTANA DE CHAT DE IA --- */
+        /* --- VENTANA DE CHAT DE IA EN PANTALLA COMPLETA --- */
         .ai-chat-window {
             position: fixed;
-            bottom: 110px; 
-            right: 25px;
-            width: 380px;
-            max-width: calc(100% - 50px);
-            height: 600px;
-            max-height: 75vh;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100%;
+            max-height: 100%;
             background-color: #ffffff;
-            border-radius: 15px;
-            border: 2px solid #ad1b45;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
             z-index: 1600;
             overflow: hidden;
             display: flex;
@@ -641,19 +641,6 @@
             transform: translateY(20px);
             opacity: 0;
             pointer-events: none;
-        }
-
-        /* Pantalla completa automática en móviles */
-        @media (max-width: 600px) {
-            .ai-chat-window {
-                width: 100% !important;
-                height: 100% !important;
-                max-width: 100%;
-                max-height: 100%;
-                bottom: 0;
-                right: 0;
-                border-radius: 0;
-            }
         }
 
         .ai-chat-window.show {
@@ -665,7 +652,7 @@
         .chat-header {
             background-color: #E8B63E;
             color: #ad1b45;
-            padding: 15px 20px;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -675,26 +662,26 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .header-left img {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid #ad1b45;
             object-fit: cover;
         }
 
         .chat-header h2 {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
         }
 
         .chat-header-btn {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             color: #ad1b45;
         }
@@ -709,7 +696,7 @@
 
         #chat-config-view {
             display: none;
-            padding: 30px;
+            padding: 40px;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -719,7 +706,7 @@
 
         .chat-body {
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             background-color: #f1f1f1;
             overflow-y: auto;
             display: flex;
@@ -729,10 +716,10 @@
         }
 
         .chat-message {
-            max-width: 85%;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 14px;
+            max-width: 75%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 15px;
             line-height: 1.5;
             transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
         }
@@ -748,12 +735,13 @@
             background-color: #E8B63E;
             color: #ad1b45;
             align-self: flex-end;
+            font-weight: 600;
         }
 
         .quick-replies {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             margin-top: 20px;
         }
 
@@ -761,9 +749,9 @@
             background-color: #f5e8c1; 
             color: #333333;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s;
@@ -775,20 +763,20 @@
 
         .chat-input-container {
             background-color: #ffffff;
-            padding: 15px;
+            padding: 20px 30px;
             border-top: 1px solid #e0e0e0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             transition: background-color 0.4s ease;
         }
 
         .chat-input-container input {
             flex: 1;
-            padding: 12px 15px;
+            padding: 14px 20px;
             border: 1px solid #cccccc;
             border-radius: 30px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
         }
@@ -797,17 +785,16 @@
             background: none;
             border: none;
             color: #333333;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
         }
 
-        /* Botón de envío con flecha carmesí */
         .send-btn {
             background-color: #ad1b45;
             color: white;
             border: none;
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -819,12 +806,11 @@
             transform: scale(1.1);
         }
 
-        /* Estilo Botón Reset Chat */
         .reset-btn {
             background-color: #ad1b45;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 25px;
             border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
@@ -883,6 +869,61 @@
         }
         input:checked + .slider:before {
             transform: translateX(26px);
+        }
+
+        /* --- VENTANA MODAL PERSONALIZADA DE CONFIRMACIÓN (RESET CHAT) --- */
+        .custom-confirm-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+        .custom-confirm-box {
+            background-color: #E8B63E;
+            border: 4px solid #ad1b45;
+            color: #ad1b45;
+            padding: 30px 40px;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .custom-confirm-box h3 {
+            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        .custom-confirm-box p {
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+            font-weight: 600;
+            color: #333333;
+        }
+        .custom-confirm-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .custom-confirm-buttons button {
+            background-color: transparent;
+            color: #ad1b45;
+            border: 2px solid #ad1b45;
+            padding: 10px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .custom-confirm-buttons button:hover {
+            background-color: #ad1b45;
+            color: #E8B63E;
         }
 
         /* Clases de Dark Theme con Fade suave */
@@ -1109,6 +1150,18 @@
         </div>
     </div>
 
+    <!-- MODAL PERSONALIZADO PARA CONFIRMAR RESET -->
+    <div id="custom-confirm-modal" class="custom-confirm-overlay">
+        <div class="custom-confirm-box">
+            <h3>Reset Chat</h3>
+            <p>Are you sure you want to delete all chat history?</p>
+            <div class="custom-confirm-buttons">
+                <button id="confirm-yes-btn">Yes</button>
+                <button id="confirm-no-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- BOTÓN FLOTANTE Y VENTANA DE ASISTENTE DE IA -->
     <button id="ai-bot-btn" class="ai-bot-btn">
         <img src="https://i.postimg.cc/LXxgQc7w/upscalemedia-transformed.png" alt="Aida Logo" id="bot-icon-img">
@@ -1306,16 +1359,23 @@
         const chatConfigView = document.getElementById('chat-config-view');
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const resetChatBtn = document.getElementById('reset-chat-btn');
+        
+        // Elementos de la modal de confirmación personalizada
+        const customConfirmModal = document.getElementById('custom-confirm-modal');
+        const confirmYesBtn = document.getElementById('confirm-yes-btn');
+        const confirmNoBtn = document.getElementById('confirm-no-btn');
 
         function toggleChat() {
             if (aiChatWindow.classList.contains('show')) {
                 aiChatWindow.classList.remove('show');
                 botIconImg.style.display = 'block';
                 closeBotIcon.style.display = 'none';
+                document.body.style.overflow = 'auto';
             } else {
                 aiChatWindow.classList.add('show');
                 botIconImg.style.display = 'none';
                 closeBotIcon.style.display = 'block';
+                document.body.style.overflow = 'hidden';
             }
         }
 
@@ -1333,20 +1393,29 @@
             aiChatWindow.classList.toggle('dark-theme');
         });
 
-        // Reset Chat logic con confirmación
+        // Mostrar modal de confirmación personalizado al hacer clic en Reset Chat
         resetChatBtn.addEventListener('click', () => {
-            if(confirm('Are you sure you want to delete all chat history?')) {
-                chatBody.innerHTML = `
-                    <div class="chat-message bot-message">
-                        <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. Chat has been reset.</p>
-                    </div>
-                    <div class="quick-replies">
-                        <button><i class="fa-solid fa-search"></i> Track Shipment</button>
-                        <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
-                        <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
-                        <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
-                    </div>`;
-            }
+            customConfirmModal.style.display = 'flex';
+        });
+
+        // Si hace clic en "Yes" limpia el chat y cierra el modal
+        confirmYesBtn.addEventListener('click', () => {
+            chatBody.innerHTML = `
+                <div class="chat-message bot-message">
+                    <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. Chat has been reset.</p>
+                </div>
+                <div class="quick-replies">
+                    <button><i class="fa-solid fa-search"></i> Track Shipment</button>
+                    <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
+                    <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
+                    <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
+                </div>`;
+            customConfirmModal.style.display = 'none';
+        });
+
+        // Si hace clic en "Cancel" solo oculta el modal
+        confirmNoBtn.addEventListener('click', () => {
+            customConfirmModal.style.display = 'none';
         });
 
         function sendMessage() {
@@ -1374,12 +1443,6 @@
 
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
-        });
-
-        document.addEventListener('click', (e) => {
-            if (aiChatWindow.classList.contains('show') && !aiChatWindow.contains(e.target) && !aiBotBtn.contains(e.target)) {
-                toggleChat();
-            }
         });
     </script>
 </body>
