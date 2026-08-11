@@ -686,15 +686,15 @@
             object-fit: cover;
         }
 
-        .chat-header h2 {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
         .header-right {
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+
+        .chat-header h2 {
+            font-size: 22px;
+            font-weight: 800;
         }
 
         .chat-header-btn {
@@ -1309,11 +1309,11 @@
         const aiChatWindow = document.getElementById('ai-chat-window');
         const botIconImg = document.getElementById('bot-icon-img');
         const closeBotIcon = document.getElementById('close-bot-icon');
-        const chatCloseBtn = document.getElementById('chat-close-btn');
         const chatInput = document.getElementById('chat-input');
         const chatBody = document.getElementById('chat-body');
         const sendBtn = document.getElementById('send-btn');
         const chatConfigBtn = document.getElementById('chat-config-btn');
+        const chatCloseBtn = document.getElementById('chat-close-btn');
         const chatMainView = document.getElementById('chat-main-view');
         const chatConfigView = document.getElementById('chat-config-view');
         const darkModeToggle = document.getElementById('dark-mode-toggle');
