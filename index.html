@@ -1102,7 +1102,6 @@
         </div>
     </div>
 
-    <!-- NUEVO MODAL DE CONFIRMACIÓN DE RESET DE CHAT -->
     <div id="reset-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <h2>Reset Chat</h2>
@@ -1139,10 +1138,10 @@
                     <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. I'm here to help you with any queries.</p>
                 </div>
                 <div class="quick-replies">
-                    <button><i class="fa-solid fa-search"></i> Track Shipment</button>
-                    <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
-                    <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
-                    <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
+                    <button class="quick-reply-btn" data-query="track">Track Shipment</button>
+                    <button class="quick-reply-btn" data-query="book">Book a Shipment</button>
+                    <button class="quick-reply-btn" data-query="quote">Get a Quote</button>
+                    <button class="quick-reply-btn" data-query="contact">Contact Us</button>
                 </div>
             </div>
             <div class="chat-input-container">
@@ -1152,7 +1151,7 @@
             </div>
         </div>
 
-        <!-- Vista de Configuración (Dark Mode Switch y Reset) -->
+        <!-- Vista de Configuración -->
         <div id="chat-config-view">
             <div class="switch-container">
                 <span style="font-weight:bold; color:#ad1b45;">Dark Mode</span>
@@ -1202,6 +1201,9 @@
         const fragment = new URLSearchParams(window.location.hash.slice(1));
         const accessToken = fragment.get('access_token');
 
+        // Variable global para almacenar el nombre de usuario actual de Discord
+        let currentDiscordUser = null;
+
         if (accessToken) {
             fetch('https://discord.com/api/users/@me', {
                 headers: { authorization: `Bearer ${accessToken}` },
@@ -1211,6 +1213,7 @@
                 loginBtn.style.display = 'none';
                 userProfile.style.display = 'flex';
                 usernameDisplay.textContent = data.username;
+                currentDiscordUser = data.username; // Guardamos el usuario aquí
                 const avatarHash = data.avatar;
 
                 if (avatarHash) {
@@ -1239,6 +1242,7 @@
             userProfile.style.display = 'none';
             loginBtn.style.display = 'flex';
             dropdownMenu.classList.remove('show');
+            currentDiscordUser = null; // Borramos el usuario al cerrar sesión
         });
 
         const privacyModal = document.getElementById('privacy-modal');
@@ -1298,7 +1302,7 @@
             teamModal.style.display = 'flex';
         });
 
-        // --- LÓGICA DEL ASISTENTE DE IA EN PANTALLA COMPLETA ---
+        // --- LÓGICA DEL ASISTENTE DE IA ---
         const aiBotBtn = document.getElementById('ai-bot-btn');
         const aiChatWindow = document.getElementById('ai-chat-window');
         const botIconImg = document.getElementById('bot-icon-img');
@@ -1346,7 +1350,6 @@
             aiChatWindow.classList.toggle('dark-theme');
         });
 
-        // Mostrar modal de confirmación en lugar del confirm nativo
         resetChatBtn.addEventListener('click', () => {
             resetModal.style.display = 'flex';
         });
@@ -1361,18 +1364,38 @@
                     <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. Chat has been reset.</p>
                 </div>
                 <div class="quick-replies">
-                    <button><i class="fa-solid fa-search"></i> Track Shipment</button>
-                    <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
-                    <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
-                    <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
+                    <button class="quick-reply-btn" data-query="track">Track Shipment</button>
+                    <button class="quick-reply-btn" data-query="book">Book a Shipment</button>
+                    <button class="quick-reply-btn" data-query="quote">Get a Quote</button>
+                    <button class="quick-reply-btn" data-query="contact">Contact Us</button>
                 </div>`;
             resetModal.style.display = 'none';
+            bindQuickReplies();
         });
 
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (text === "") return;
+        // --- CÓDIGO INTELIGENTE DE RESPUESTA DE LA IA ---
+        function generateAIResponse(userText) {
+            const textLower = userText.toLowerCase();
+            let userNamePart = currentDiscordUser ? `@${currentDiscordUser}` : "there";
 
+            // Evaluamos patrones comunes o palabras clave (puedes expandir esto o conectarlo a una API externa)
+            if (textLower.includes('track') || textLower.includes('package') || textLower.includes('shipment')) {
+                return `Hey ${userNamePart}, to track your package you have to enter the official discord server using this link https://discord.gg/2Vvb87kugf and enter the tracking-package channel.`;
+            } else if (textLower.includes('book') || textLower.includes('booking')) {
+                return `Hey ${userNamePart}, to book a shipment, please head over to our bookings channel in our Discord server: https://discord.gg/2Vvb87kugf`;
+            } else if (textLower.includes('quote') || textLower.includes('price')) {
+                return `Hey ${userNamePart}, for quotes and pricing details, feel free to open a ticket in our official community server: https://discord.gg/2Vvb87kugf`;
+            } else if (textLower.includes('contact') || textLower.includes('help')) {
+                return `Hey ${userNamePart}, you can contact our administrative team directly by joining our Discord: https://discord.gg/2Vvb87kugf`;
+            } else {
+                return `Hey ${userNamePart}, I received your message: "${userText}". If you need further assistance with your virtual cargo operations, please visit our Discord server: https://discord.gg/2Vvb87kugf`;
+            }
+        }
+
+        function handleUserMessage(text) {
+            if (text.trim() === "") return;
+
+            // Mostrar mensaje del usuario
             const userMsg = document.createElement('div');
             userMsg.className = 'chat-message user-message';
             userMsg.textContent = text;
@@ -1381,20 +1404,45 @@
             chatInput.value = "";
             chatBody.scrollTop = chatBody.scrollHeight;
 
+            // Simular respuesta de la IA tras un breve retraso realista
             setTimeout(() => {
+                const botResponseText = generateAIResponse(text);
                 const botMsg = document.createElement('div');
                 botMsg.className = 'chat-message bot-message';
-                botMsg.textContent = "Aida: I received: " + text;
+                botMsg.innerHTML = `<p>${botResponseText}</p>`;
                 chatBody.appendChild(botMsg);
                 chatBody.scrollTop = chatBody.scrollHeight;
             }, 600);
         }
 
-        sendBtn.addEventListener('click', sendMessage);
+        sendBtn.addEventListener('click', () => {
+            handleUserMessage(chatInput.value);
+        });
 
         chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
+            if (e.key === 'Enter') {
+                handleUserMessage(chatInput.value);
+            }
         });
+
+        // Manejo de botones de respuestas rápidas
+        function bindQuickReplies() {
+            document.querySelectorAll('.quick-reply-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const queryType = button.getAttribute('data-query');
+                    let queryText = "";
+                    if(queryType === 'track') queryText = "How i track my package?";
+                    if(queryType === 'book') queryText = "How do I book a shipment?";
+                    if(queryType === 'quote') queryText = "Can I get a quote?";
+                    if(queryType === 'contact') queryText = "How can I contact support?";
+                    
+                    if(queryText) handleUserMessage(queryText);
+                });
+            });
+        }
+
+        // Vincular al cargar la página
+        bindQuickReplies();
     </script>
 </body>
 </html>
