@@ -41,7 +41,7 @@
             object-fit: contain;
             transition: transform 0.3s ease;
         }
-        
+
         .logo-container:hover img {
             transform: scale(1.05);
         }
@@ -472,6 +472,174 @@
             color: #444444;
             font-weight: 600;
         }
+
+        /* --- BOTÓN DE ASISTENTE DE IA (ESTILOS NUEVOS) --- */
+        .ai-bot-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            background-color: #ad1b45; /* Crimson to match cards */
+            color: #E8B63E; /* Yellow icon */
+            border: none;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .ai-bot-btn:hover {
+            transform: scale(1.1);
+            background-color: #92173b; /* Slightly darker on hover */
+        }
+
+        /* --- VENTANA DE CHAT DE IA (ESTILOS NUEVOS) --- */
+        .ai-chat-window {
+            position: fixed;
+            bottom: 100px; /* Positioned above the button */
+            right: 25px;
+            width: 400px;
+            height: 600px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            border: 2px solid #ad1b45;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1600;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .ai-chat-window.show {
+            transform: translateY(0);
+            opacity: 1;
+            display: flex; /* Show the window */
+        }
+
+        .chat-header {
+            background-color: #E8B63E;
+            color: #ad1b45;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ad1b45;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-icon {
+            font-size: 24px;
+        }
+
+        .chat-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            text-transform: none; /* Keep "Aida" normal case */
+        }
+
+        .close-chat-btn {
+            font-size: 30px;
+            color: #ad1b45;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            background-color: #f1f1f1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .bot-message {
+            background-color: #ffffff;
+            color: #333333;
+            align-self: flex-start;
+            border: 1px solid #e0e0e0;
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: left;
+        }
+
+        .quick-replies button {
+            background-color: #f5e8c1; /* Lighter yellow */
+            color: #333333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-replies button:hover {
+            background-color: #e8d89f;
+        }
+
+        .chat-input-container {
+            background-color: #ffffff;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #cccccc;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .chat-options-btn, .chat-voice-btn {
+            background: none;
+            border: none;
+            color: #333333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chat-voice-btn {
+            color: #ad1b45; /* Microphone in crimson */
+        }
     </style>
 </head>
 <body id="top">
@@ -608,7 +776,7 @@
         <div class="team-modal-content">
             <button class="close-team-btn" id="close-team-btn">&times;</button>
             <h2 class="section-title">Executive Directory</h2>
-            
+
             <div class="team-profiles-container">
                 <!-- Founder (Camping_n) -->
                 <div class="team-profile">
@@ -693,6 +861,43 @@
         </div>
     </div>
 
+    <!-- --- BOTÓN FLOTANTE Y VENTANA DE ASISTENTE DE IA (AÑADIDOS AL FINAL) --- -->
+
+    <!-- AI Assistant Floating Button -->
+    <button id="ai-bot-btn" class="ai-bot-btn">
+        <i class="fa-solid fa-robot"></i>
+    </button>
+
+    <!-- AI Chat Window -->
+    <div id="ai-chat-window" class="ai-chat-window" style="display: none;">
+        <div class="chat-header">
+            <div class="header-left">
+                <i class="fa-solid fa-robot header-icon"></i>
+                <h2>Aida</h2>
+            </div>
+            <div class="header-actions">
+                <button id="close-chat-btn" class="close-chat-btn">&times;</button>
+            </div>
+        </div>
+        <div class="chat-body">
+            <div class="chat-message bot-message">
+                <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. I'm here to help you with any queries.</p>
+            </div>
+            <div class="quick-replies">
+                <button><i class="fa-solid fa-search"></i> Track Shipment</button>
+                <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
+                <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
+                <button><i class="fa-solid fa-calendar-days"></i> Sailing Schedule</button>
+                <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <button class="chat-options-btn"><i class="fa-solid fa-bars"></i></button>
+            <input type="text" placeholder="Type your message here ...">
+            <button class="chat-voice-btn"><i class="fa-solid fa-microphone"></i></button>
+        </div>
+    </div>
+
     <script>
         // CONFIGURACIÓN DE DISCORD OAUTH2 (FRONTEND)
         const clientId = '1529215900673380514'; 
@@ -720,12 +925,12 @@
                 userProfile.style.display = 'flex';
                 usernameDisplay.textContent = data.username;
                 const avatarHash = data.avatar;
-                
+
                 if (avatarHash) {
-                    userAvatar.src = `https://cdn.discordapp.com/avatars/${data.id}/${avatarHash}.png`;
+                    userAvatar.src = `https://cdn.discordavatars.com/avatars/${data.id}/${avatarHash}.png`;
                 } else {
                     const defaultAvatarIndex = Math.abs(data.id >> 22) % 6;
-                    userAvatar.src = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`;
+                    userAvatar.src = `https://cdn.discord.com/embed/avatars/${defaultAvatarIndex}.png`;
                 }
             })
             .catch(console.error);
@@ -815,7 +1020,7 @@
             ceo: {
                 name: "Available",
                 role: "CEO",
-                avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
+                avatar: "https://cdn.discord.com/embed/avatars/0.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
                 msg2: "The highest authority in the management of a company, responsible for defining the overall strategy, making key decisions, and leading the executive teams.",
                 msg3: "Oh yes, not here either."
@@ -823,7 +1028,7 @@
             operations: {
                 name: "Available",
                 role: "Director of Operations",
-                avatar: "https://cdn.discordapp.com/embed/avatars/1.png",
+                avatar: "https://cdn.discord.com/embed/avatars/1.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
                 msg2: "Manages daily activities, optimizes internal processes, and aligns company resources.",
                 msg3: "Oh yes, not here either."
@@ -831,7 +1036,7 @@
             moderators: {
                 name: "Available",
                 role: "Director of Moderators",
-                avatar: "https://cdn.discordapp.com/embed/avatars/2.png",
+                avatar: "https://cdn.discord.com/embed/avatars/2.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
                 msg2: "The person responsible for leading teams of moderators, hiring and firing, and defining large-scale strategies for a digital platform or community.",
                 msg3: "Oh yes, not here either."
@@ -839,7 +1044,7 @@
             pr: {
                 name: "Available",
                 role: "Director of Public Relations",
-                avatar: "https://cdn.discordapp.com/embed/avatars/3.png",
+                avatar: "https://cdn.discord.com/embed/avatars/3.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
                 msg2: "A leader responsible for creating, protecting, and enhancing a company's public image and reputation. Key responsibilities include designing communication strategies, leading media relations, and managing crisis situations.",
                 msg3: "Oh yes, not here either."
@@ -847,7 +1052,7 @@
             hr: {
                 name: "Available",
                 role: "Director of Human Resources",
-                avatar: "https://cdn.discordapp.com/embed/avatars/4.png",
+                avatar: "https://cdn.discord.com/embed/avatars/4.png",
                 msg1: "\"Blank. Nothing to see here hehe\"",
                 msg2: "Leads a company's human talent strategy, encompassing workforce planning, recruitment, and organizational development.",
                 msg3: "Oh yes, not here either."
@@ -897,6 +1102,42 @@
                 teamModal.style.display = 'flex';
             }
         });
+
+        // --- LÓGICA DEL ASISTENTE DE IA (NUEVA) ---
+        const aiBotBtn = document.getElementById('ai-bot-btn');
+        const aiChatWindow = document.getElementById('ai-chat-window');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+
+        // Function to toggle chat window
+        function toggleChat() {
+            if (aiChatWindow.classList.contains('show')) {
+                aiChatWindow.classList.remove('show');
+                aiBotBtn.innerHTML = '<i class="fa-solid fa-robot"></i>'; // Change back to robot icon
+                aiBotBtn.style.backgroundColor = '#ad1b45'; // Primary color
+            } else {
+                aiChatWindow.classList.add('show');
+                aiBotBtn.innerHTML = '<i class="fa-solid fa-times"></i>'; // Change to close icon
+                aiBotBtn.style.backgroundColor = '#e0e0e0'; // Light gray while open
+            }
+        }
+
+        aiBotBtn.addEventListener('click', toggleChat);
+
+        closeChatBtn.addEventListener('click', () => {
+            aiChatWindow.classList.remove('show');
+            aiBotBtn.innerHTML = '<i class="fa-solid fa-robot"></i>';
+            aiBotBtn.style.backgroundColor = '#ad1b45';
+        });
+
+        // Close chat if clicked outside
+        document.addEventListener('click', (e) => {
+            if (!aiChatWindow.contains(e.target) && !aiBotBtn.contains(e.target)) {
+                aiChatWindow.classList.remove('show');
+                aiBotBtn.innerHTML = '<i class="fa-solid fa-robot"></i>';
+                aiBotBtn.style.backgroundColor = '#ad1b45';
+            }
+        });
+
     </script>
 </body>
 </html>
