@@ -4,123 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DHL Roblox Group</title>
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/pdjV9tDM/6111-removebg-preview.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        /* --- CHAT FULL SCREEN --- */
+        .ai-bot-btn { position: fixed; bottom: 25px; right: 25px; width: 75px; height: 75px; background-color: #E8B63E; border: 4px solid #ad1b45; border-radius: 50%; cursor: pointer; z-index: 1500; }
+        .ai-bot-btn img { width: 100%; height: 100%; border-radius: 50%; }
 
-        header {
-            background-color: #E8B63E;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-            height: 90px;
-            position: sticky;
-            top: 0;
-            z-index: 500;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        .ai-chat-window { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+            background-color: #ffffff; z-index: 2000; display: none; flex-direction: column; 
         }
-
-        .logo-container { cursor: pointer; z-index: 1002; }
-        .logo-container img { height: 175px; object-fit: contain; transition: transform 0.3s ease; }
-        
-        .nav-wrapper { display: flex; align-items: center; justify-content: space-between; flex-grow: 1; margin-left: 40px; }
-        nav { display: flex; gap: 35px; }
-        nav a { color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px; cursor: pointer; }
-
-        .menu-toggle { display: none; font-size: 35px; color: #ad1b45; cursor: pointer; z-index: 1002; }
-        .close-menu-btn { display: none; position: absolute; top: 25px; right: 25px; font-size: 45px; background: none; border: none; color: #ad1b45; cursor: pointer; }
-
-        .discord-join-header, .discord-btn { background-color: #5865F2; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 30px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        
-        .user-profile { display: none; align-items: center; gap: 12px; position: relative; cursor: pointer; color: #ffffff; font-weight: 700; }
-        .user-profile img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ffffff; }
-        .dropdown { display: none; position: absolute; top: 60px; right: 0; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); min-width: 150px; z-index: 100; }
-        .dropdown.show { display: block; }
-        .dropdown a { display: block; padding: 12px 20px; color: #d83c3e; text-decoration: none; }
-
-        @media (max-width: 992px) {
-            .menu-toggle { display: block; }
-            .nav-wrapper { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; background-color: #E8B63E; flex-direction: column; padding: 100px 30px; transition: left 0.3s ease; z-index: 1001; }
-            .nav-wrapper.open { left: 0; }
-            nav { flex-direction: column; gap: 25px; }
-            .close-menu-btn { display: block; }
-        }
-
-        .hero { height: calc(100vh - 90px); background-image: url('https://i.postimg.cc/d3K5qJnp/Diseno-sin-titulo-(1).png'); background-size: cover; background-position: center; }
-        .content-section { padding: 80px 40px; background-color: #f9f9f9; }
-        .section-title { text-align: center; font-size: 36px; color: #ad1b45; margin-bottom: 50px; text-transform: uppercase; }
-        
-        /* BOTÓN Y CHAT IA */
-        .ai-bot-btn { position: fixed; bottom: 25px; right: 25px; width: 75px; height: 75px; background-color: #E8B63E; border: 4px solid #ad1b45; border-radius: 50%; cursor: pointer; z-index: 1500; display: flex; justify-content: center; align-items: center; }
-        .ai-bot-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        
-        .ai-chat-window { position: fixed; bottom: 110px; right: 25px; width: 380px; max-width: calc(100% - 50px); height: 600px; max-height: 75vh; background-color: #ffffff; border-radius: 15px; border: 2px solid #ad1b45; z-index: 1600; display: none; flex-direction: column; }
         .ai-chat-window.show { display: flex; }
-        .chat-header { background-color: #E8B63E; color: #ad1b45; padding: 15px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #ad1b45; }
+
+        .chat-header { background-color: #E8B63E; color: #ad1b45; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #ad1b45; }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .header-actions button { background: none; border: none; font-size: 24px; color: #000; cursor: pointer; margin-left: 15px; }
+
         .chat-body { flex: 1; padding: 20px; background-color: #f1f1f1; overflow-y: auto; }
-        .bot-message { background-color: #ffffff; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #e0e0e0; }
-        .chat-input-container { padding: 15px; border-top: 1px solid #e0e0e0; display: flex; align-items: center; gap: 10px; background: white; }
+        
+        /* --- MENÚ SETTINGS --- */
+        .settings-panel { padding: 40px; }
+        .settings-option { padding: 20px; background: white; margin-bottom: 10px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; border: 2px solid #ad1b45; font-weight: bold; }
+
+        /* --- MODAL CONFIRMACIÓN --- */
+        .modal-overlay { position: fixed; top:0; left:0; width: 100%; height:100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 3000; }
+        .modal-box { background: #E8B63E; border: 4px solid #ad1b45; padding: 30px; border-radius: 12px; text-align: center; color: #ad1b45; }
+        .modal-btn { background: transparent; border: 2px solid #ad1b45; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin: 10px; }
+
+        .chat-input-container { padding: 15px; border-top: 1px solid #ccc; display: flex; gap: 10px; background: white; }
         .chat-input-container input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 30px; }
-        .chat-voice-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #ad1b45; }
+        .chat-voice-btn { background: none; border: none; font-size: 20px; color: #ad1b45; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="#top" class="logo-container"><img src="https://i.postimg.cc/pdjV9tDM/6111-removebg-preview.png" alt="Logo"></a>
-        <div class="menu-toggle" id="mobile-menu-toggle"><i class="fa-solid fa-bars"></i></div>
-        <div class="nav-wrapper" id="nav-wrapper">
-            <button class="close-menu-btn" id="close-menu-btn">&times;</button>
-            <nav>
-                <a href="#about">About us</a>
-                <a href="#fleet">Fleet</a>
-                <a href="#careers">Careers</a>
-            </nav>
-            <div class="header-actions">
-                <a href="https://discord.gg/2Vvb87kugf" class="discord-join-header"><i class="fa-brands fa-discord"></i> Join Discord</a>
-            </div>
-        </div>
-    </header>
-
-    <main><section class="hero"></section></main>
-
-    <!-- BOTÓN IA -->
-    <button id="ai-bot-btn" class="ai-bot-btn">
-        <img src="https://i.postimg.cc/LXxgQc7w/upscalemedia-transformed.png" alt="Aida" id="bot-icon-img">
+    <!-- BOTÓN FLOTANTE -->
+    <button id="ai-bot-btn" class="ai-bot-btn" onclick="toggleChat()">
+        <img src="https://i.postimg.cc/LXxgQc7w/upscalemedia-transformed.png" alt="Aida">
     </button>
 
     <!-- VENTANA CHAT -->
     <div id="ai-chat-window" class="ai-chat-window">
         <div class="chat-header">
-            <img src="https://i.postimg.cc/LXxgQc7w/upscalemedia-transformed.png" alt="Aida" style="width: 30px; height: 30px; border-radius: 50%;">
-            <h2>Aida</h2>
-        </div>
-        <div class="chat-body">
-            <div class="chat-message bot-message">
-                Hello! I'm Aida, the DHL Group Virtual Assistant. I'm here to help you with any queries!
+            <div class="header-left">
+                <img src="https://i.postimg.cc/LXxgQc7w/upscalemedia-transformed.png" style="width: 30px; border-radius: 50%;">
+                <h2>Aida</h2>
+            </div>
+            <div class="header-actions">
+                <button onclick="toggleSettings()"><i class="fa-solid fa-gear" style="color: black;"></i></button>
+                <button onclick="toggleChat()"><i class="fa-solid fa-times"></i></button>
             </div>
         </div>
+
+        <div id="chat-content" class="chat-body">
+            <!-- Mensajes aquí -->
+            <div id="messages-container">
+                <div style="background:white; padding:15px; border-radius:10px;">Hello! I'm Aida, the DHL Group Virtual Assistant. I'm here to help you with any queries!</div>
+            </div>
+        </div>
+
         <div class="chat-input-container">
-            <input type="text" placeholder="Type your message...">
+            <input type="text" placeholder="Type message...">
             <button class="chat-voice-btn"><i class="fa-solid fa-arrow-up"></i></button>
         </div>
     </div>
 
-    <script>
-        // Menú Hamburguesa
-        const toggle = document.getElementById('mobile-menu-toggle');
-        const nav = document.getElementById('nav-wrapper');
-        const close = document.getElementById('close-menu-btn');
-        toggle.addEventListener('click', () => nav.classList.add('open'));
-        close.addEventListener('click', () => nav.classList.remove('open'));
+    <!-- MODAL RESET -->
+    <div id="reset-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>Are you sure?</h2>
+            <p>This will delete your entire conversation.</p>
+            <button class="modal-btn" onclick="confirmReset()">Yes</button>
+            <button class="modal-btn" onclick="document.getElementById('reset-modal').style.display='none'">No</button>
+        </div>
+    </div>
 
-        // Chat IA
-        const botBtn = document.getElementById('ai-bot-btn');
-        const chatWindow = document.getElementById('ai-chat-window');
-        botBtn.addEventListener('click', () => chatWindow.classList.toggle('show'));
+    <script>
+        let settingsOpen = false;
+
+        function toggleChat() {
+            document.getElementById('ai-chat-window').classList.toggle('show');
+        }
+
+        function toggleSettings() {
+            const body = document.getElementById('chat-content');
+            settingsOpen = !settingsOpen;
+            
+            if (settingsOpen) {
+                body.innerHTML = `
+                    <div class="settings-panel">
+                        <div class="settings-option">Dark Mode <span>OFF</span></div>
+                        <div class="settings-option" onclick="showResetModal()">Reset Chat</div>
+                    </div>`;
+            } else {
+                body.innerHTML = `<div id="messages-container"><div style="background:white; padding:15px; border-radius:10px;">Hello! I'm Aida, the DHL Group Virtual Assistant. I'm here to help you with any queries!</div></div>`;
+            }
+        }
+
+        function showResetModal() {
+            document.getElementById('reset-modal').style.display = 'flex';
+        }
+
+        function confirmReset() {
+            // Limpia mensajes
+            document.getElementById('messages-container').innerHTML = '';
+            document.getElementById('reset-modal').style.display = 'none';
+            // Cierra settings y vuelve al chat
+            toggleSettings(); 
+        }
     </script>
 </body>
 </html>
