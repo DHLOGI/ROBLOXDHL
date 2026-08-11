@@ -1373,29 +1373,11 @@
             bindQuickReplies();
         });
 
-        // --- CÓDIGO INTELIGENTE DE RESPUESTA DE LA IA ---
-        function generateAIResponse(userText) {
-            const textLower = userText.toLowerCase();
-            let userNamePart = currentDiscordUser ? `@${currentDiscordUser}` : "there";
-
-            // Evaluamos patrones comunes o palabras clave (puedes expandir esto o conectarlo a una API externa)
-            if (textLower.includes('track') || textLower.includes('package') || textLower.includes('shipment')) {
-                return `Hey ${userNamePart}, to track your package you have to enter the official discord server using this link https://discord.gg/2Vvb87kugf and enter the tracking-package channel.`;
-            } else if (textLower.includes('book') || textLower.includes('booking')) {
-                return `Hey ${userNamePart}, to book a shipment, please head over to our bookings channel in our Discord server: https://discord.gg/2Vvb87kugf`;
-            } else if (textLower.includes('quote') || textLower.includes('price')) {
-                return `Hey ${userNamePart}, for quotes and pricing details, feel free to open a ticket in our official community server: https://discord.gg/2Vvb87kugf`;
-            } else if (textLower.includes('contact') || textLower.includes('help')) {
-                return `Hey ${userNamePart}, you can contact our administrative team directly by joining our Discord: https://discord.gg/2Vvb87kugf`;
-            } else {
-                return `Hey ${userNamePart}, I received your message: "${userText}". If you need further assistance with your virtual cargo operations, please visit our Discord server: https://discord.gg/2Vvb87kugf`;
-            }
-        }
-
-        function handleUserMessage(text) {
+        // --- CONEXIÓN REAL CON LA NETLIFY FUNCTION (OPENROUTER / IA) ---
+        async function handleUserMessage(text) {
             if (text.trim() === "") return;
 
-            // Mostrar mensaje del usuario
+            // 1. Mostrar mensaje del usuario en pantalla
             const userMsg = document.createElement('div');
             userMsg.className = 'chat-message user-message';
             userMsg.textContent = text;
@@ -1404,15 +1386,34 @@
             chatInput.value = "";
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            // Simular respuesta de la IA tras un breve retraso realista
-            setTimeout(() => {
-                const botResponseText = generateAIResponse(text);
+            try {
+                // 2. Petición a la Netlify Function para procesar con la IA
+                const res = await fetch('/.netlify/functions/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: text,
+                        username: currentDiscordUser // Envía el nombre de usuario de Discord si está logueado
+                    })
+                });
+
+                const data = await res.json();
+                const botReplyText = data.reply || "Sorry, I couldn't process your request.";
+
+                // 3. Mostrar la respuesta de la IA en el chat
                 const botMsg = document.createElement('div');
                 botMsg.className = 'chat-message bot-message';
-                botMsg.innerHTML = `<p>${botResponseText}</p>`;
+                botMsg.innerHTML = `<p>${botReplyText}</p>`;
                 chatBody.appendChild(botMsg);
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 600);
+
+            } catch (error) {
+                console.error("Error al conectar con la IA:", error);
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'chat-message bot-message';
+                errorMsg.innerHTML = `<p>Sorry, I'm having trouble connecting to my servers right now.</p>`;
+                chatBody.appendChild(errorMsg);
+            }
         }
 
         sendBtn.addEventListener('click', () => {
