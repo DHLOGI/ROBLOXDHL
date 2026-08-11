@@ -34,6 +34,7 @@
         .logo-container {
             display: block;
             cursor: pointer;
+            z-index: 1002; /* Para que quede sobre el menú móvil si es necesario */
         }
 
         .logo-container img {
@@ -44,6 +45,15 @@
 
         .logo-container:hover img {
             transform: scale(1.05);
+        }
+
+        /* --- CONTENEDORES DEL MENÚ (RESPONSIVE) --- */
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-grow: 1;
+            margin-left: 40px;
         }
 
         nav {
@@ -64,14 +74,30 @@
             opacity: 0.8;
         }
 
-        /* Contenedor para los botones de la derecha en la cabecera */
         .header-actions {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        /* Botón de unirse a Discord en la cabecera */
+        /* Botón Menú Hamburguesa (Oculto en PC) */
+        .menu-toggle {
+            display: none;
+            font-size: 35px;
+            color: #ad1b45;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .close-menu-btn {
+            display: none;
+        }
+
+        .menu-overlay {
+            display: none;
+        }
+
+        /* Botones de Cabecera */
         .discord-join-header {
             background-color: #5865F2;
             color: #ffffff;
@@ -91,7 +117,6 @@
             transform: scale(1.05);
         }
 
-        /* Login Button */
         .discord-btn {
             background-color: #5865F2;
             color: #ffffff;
@@ -161,6 +186,110 @@
             background-color: #f5f5f5;
         }
 
+        /* --- MEDIA QUERIES (OPTIMIZACIÓN PARA CELULAR) --- */
+        @media (max-width: 992px) {
+            header {
+                padding: 0 20px;
+            }
+
+            .menu-toggle {
+                display: block; /* Mostrar hamburguesa en móvil */
+            }
+
+            .nav-wrapper {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: #E8B63E;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 100px 30px 30px 30px;
+                margin-left: 0;
+                transition: left 0.3s ease;
+                z-index: 1001;
+                box-shadow: 2px 0 15px rgba(0,0,0,0.3);
+            }
+
+            .nav-wrapper.open {
+                left: 0;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 25px;
+                width: 100%;
+                margin-bottom: 40px;
+            }
+
+            nav a {
+                font-size: 18px;
+                color: #ad1b45; /* Contraste en modo móvil */
+            }
+
+            .header-actions {
+                flex-direction: column;
+                width: 100%;
+                align-items: stretch;
+                gap: 20px;
+            }
+
+            .discord-join-header, .discord-btn {
+                justify-content: center;
+                font-size: 16px;
+                padding: 15px 20px;
+            }
+
+            .user-profile {
+                justify-content: flex-start;
+                padding: 10px 0;
+                color: #ad1b45;
+                font-size: 18px;
+            }
+
+            .user-profile img {
+                border-color: #ad1b45;
+            }
+
+            .dropdown {
+                top: 55px;
+                left: 0;
+                right: auto;
+                border: 2px solid #ad1b45;
+            }
+
+            .close-menu-btn {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                font-size: 45px;
+                background: none;
+                border: none;
+                color: #ad1b45;
+                cursor: pointer;
+            }
+
+            .menu-overlay {
+                display: block;
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0,0,0,0.6);
+                z-index: 1000;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+
+            .menu-overlay.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
         .hero {
             height: calc(100vh - 90px);
             background-image: url('https://i.postimg.cc/d3K5qJnp/Diseno-sin-titulo-(1).png');
@@ -197,7 +326,8 @@
             color: #ad1b45;
             padding: 30px;
             border-radius: 12px;
-            width: 320px;
+            width: 100%;
+            max-width: 320px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             display: flex;
@@ -214,7 +344,6 @@
             margin-bottom: 20px;
         }
 
-        /* Imágenes reales de la flota */
         .fleet-img {
             width: 100%;
             height: 160px;
@@ -256,18 +385,18 @@
             color: #E8B63E;
         }
 
-        /* Modal de Privacidad y Aplicaciones */
+        /* --- MODALES --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
             display: flex; justify-content: center; align-items: center;
-            z-index: 1000;
+            z-index: 3000;
         }
 
         .modal-content {
             background-color: #E8B63E; border: 4px solid #ad1b45; color: #ad1b45;
-            padding: 30px 40px; border-radius: 12px; max-width: 500px;
+            padding: 30px 40px; border-radius: 12px; max-width: 90%; width: 500px;
             text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
@@ -280,7 +409,6 @@
         }
         .modal-content button:hover { background-color: #ad1b45; color: #E8B63E; }
 
-        /* Modal Elegante del Equipo Directivo (Blanco) */
         .team-modal-overlay {
             display: none;
             position: fixed;
@@ -299,7 +427,7 @@
             max-height: 90vh;
             overflow-y: auto;
             border-radius: 15px;
-            padding: 50px;
+            padding: 50px 20px;
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
             border: 2px solid #ad1b45;
@@ -307,17 +435,13 @@
 
         .close-team-btn {
             position: absolute;
-            top: 20px; right: 30px;
+            top: 15px; right: 25px;
             font-size: 40px;
             color: #ad1b45;
             background: none;
             border: none;
             cursor: pointer;
             transition: transform 0.2s;
-        }
-
-        .close-team-btn:hover {
-            transform: scale(1.2);
         }
 
         .team-profiles-container {
@@ -341,7 +465,7 @@
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            border: 5px solid #ad1b45; /* Círculo carmesí */
+            border: 5px solid #ad1b45;
             object-fit: cover;
             margin-bottom: 20px;
             box-shadow: 0 8px 15px rgba(173, 27, 69, 0.2);
@@ -371,7 +495,6 @@
             text-align: center;
         }
 
-        /* Modal Individual de Perfil del Usuario */
         .profile-modal-overlay {
             display: none;
             position: fixed;
@@ -388,7 +511,7 @@
             width: 100%;
             max-width: 800px;
             border-radius: 15px;
-            padding: 40px 50px;
+            padding: 40px 30px;
             position: relative;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
             border: 2px solid #ad1b45;
@@ -397,24 +520,22 @@
 
         .close-profile-btn {
             position: absolute;
-            top: 20px; right: 30px;
+            top: 15px; right: 25px;
             font-size: 35px;
             color: #ad1b45;
             background: none;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .close-profile-btn:hover {
-            transform: scale(1.2);
         }
 
         .profile-header-info {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
             margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
         }
 
         .profile-header-info img {
@@ -473,26 +594,176 @@
             font-weight: 600;
         }
 
-        /* --- ESTILOS PARA EL CHAT BOT --- */
-        .ai-bot-btn { 
-            position: fixed; bottom: 25px; right: 25px; width: 75px; height: 75px; 
-            background-color: #E8B63E; border: 4px solid #ad1b45; border-radius: 50%; 
-            cursor: pointer; z-index: 1000; display: flex; justify-content: center; align-items: center; 
+        /* --- BOTÓN DE ASISTENTE DE IA --- */
+        .ai-bot-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 75px; 
+            height: 75px;
+            background-color: #E8B63E;
+            border: 4px solid #ad1b45;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+            overflow: hidden;
+            padding: 0;
         }
-        .ai-bot-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
-        .ai-chat-fullscreen { 
-            display: none; /* OCULTO POR DEFECTO */
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-            background: white; z-index: 9999; flex-direction: column; 
+        .ai-bot-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
-        .ai-chat-fullscreen.show { display: flex; }
-        
-        .chat-header-fs { background: #E8B63E; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #ad1b45; }
-        .chat-body-fs { flex: 1; padding: 20px; background: #f1f1f1; overflow-y: auto; }
-        .chat-input-fs { padding: 20px; border-top: 1px solid #ccc; display: flex; gap: 10px; background: white; }
-        .chat-input-fs input { flex: 1; padding: 15px; border: 1px solid #ccc; border-radius: 30px; }
-        .send-btn { background: none; border: none; font-size: 24px; color: #ad1b45; cursor: pointer; }
+
+        .ai-bot-btn:hover {
+            transform: scale(1.08);
+        }
+
+        /* --- VENTANA DE CHAT DE IA --- */
+        .ai-chat-window {
+            position: fixed;
+            bottom: 110px; 
+            right: 25px;
+            width: 380px;
+            max-width: calc(100% - 50px);
+            height: 600px;
+            max-height: 75vh;
+            background-color: #ffffff;
+            border-radius: 15px;
+            border: 2px solid #ad1b45;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1600;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ai-chat-window.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-header {
+            background-color: #E8B63E;
+            color: #ad1b45;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ad1b45;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-icon {
+            font-size: 24px;
+        }
+
+        .chat-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            background-color: #f1f1f1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .bot-message {
+            background-color: #ffffff;
+            color: #333333;
+            align-self: flex-start;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Clase añadida para mensajes de usuario */
+        .user-message {
+            background-color: #E8B63E;
+            color: #ad1b45;
+            align-self: flex-end;
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .quick-replies button {
+            background-color: #f5e8c1; 
+            color: #333333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .quick-replies button:hover {
+            background-color: #e8d89f;
+        }
+
+        .chat-input-container {
+            background-color: #ffffff;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #cccccc;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .chat-options-btn, .chat-voice-btn {
+            background: none;
+            border: none;
+            color: #333333;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chat-voice-btn {
+            color: #ad1b45;
+        }
     </style>
 </head>
 <body id="top">
@@ -502,33 +773,44 @@
             <img src="https://i.postimg.cc/pdjV9tDM/6111-removebg-preview.png" alt="DHL Logo">
         </a>
 
-        <nav>
-            <a href="#about">About us</a>
-            <a href="#fleet">Fleet</a>
-            <a href="#careers">Available Careers</a>
-            <a href="#team">Meet our team</a>
-        </nav>
+        <!-- Botón de Hamburguesa para Celular -->
+        <div class="menu-toggle" id="mobile-menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
 
-        <!-- Botones de la derecha en la cabecera (Join Discord + Login / Usuario) -->
-        <div class="header-actions">
-            <a href="https://discord.gg/2Vvb87kugf" target="_blank" class="discord-join-header">
-                <i class="fa-brands fa-discord"></i> Join Discord
-            </a>
+        <!-- Envoltura de Menú (Plegable en Móvil, Header Normal en PC) -->
+        <div class="nav-wrapper" id="nav-wrapper">
+            <button class="close-menu-btn" id="close-menu-btn">&times;</button>
+            <nav>
+                <a href="#about">About us</a>
+                <a href="#fleet">Fleet</a>
+                <a href="#careers">Available Careers</a>
+                <a href="#team">Meet our team</a>
+            </nav>
 
-            <a id="login-btn" class="discord-btn" href="#">
-                <i class="fa-brands fa-discord"></i> Login With Discord
-            </a>
+            <div class="header-actions">
+                <a href="https://discord.gg/2Vvb87kugf" target="_blank" class="discord-join-header">
+                    <i class="fa-brands fa-discord"></i> Join Discord
+                </a>
 
-            <div id="user-profile" class="user-profile">
-                <span id="username-display">Username</span>
-                <img id="user-avatar" src="" alt="User Avatar">
-                <div id="dropdown-menu" class="dropdown">
-                    <a href="#" id="logout-btn">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout
-                    </a>
+                <a id="login-btn" class="discord-btn" href="#">
+                    <i class="fa-brands fa-discord"></i> Login
+                </a>
+
+                <div id="user-profile" class="user-profile">
+                    <span id="username-display">Username</span>
+                    <img id="user-avatar" src="" alt="User Avatar">
+                    <div id="dropdown-menu" class="dropdown">
+                        <a href="#" id="logout-btn">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Overlay oscuro cuando el menú está abierto en móvil -->
+        <div class="menu-overlay" id="menu-overlay"></div>
     </header>
 
     <main>
@@ -551,7 +833,7 @@
             </div>
         </section>
 
-        <!-- FLEET (SOLO B757, B727, B737 CON SUS IMÁGENES REALES) -->
+        <!-- FLEET -->
         <section id="fleet" class="content-section" style="background-color: #ffffff;">
             <h2 class="section-title">Our Fleet</h2>
             <div class="cards-container">
@@ -631,37 +913,31 @@
             <h2 class="section-title">Executive Directory</h2>
 
             <div class="team-profiles-container">
-                <!-- Founder (Camping_n) -->
                 <div class="team-profile">
                     <img src="https://i.postimg.cc/26L3mZ5Z/image.png" alt="Founder" class="profile-trigger" data-user="founder">
                     <h3>Camping_n</h3>
                     <span class="role-cursive">Founder</span>
                 </div>
-                <!-- CEO (Available) -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Available Profile" class="profile-trigger" data-user="ceo">
                     <h3>Available</h3>
                     <span class="role-cursive">CEO</span>
                 </div>
-                <!-- Director of Operations -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/1.png" alt="Available Profile" class="profile-trigger" data-user="operations">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Operations</span>
                 </div>
-                <!-- Director of Moderators -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Available Profile" class="profile-trigger" data-user="moderators">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Moderators</span>
                 </div>
-                <!-- Director of Public Relations -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Available Profile" class="profile-trigger" data-user="pr">
                     <h3>Available</h3>
                     <span class="role-cursive">Director of Public Relations</span>
                 </div>
-                <!-- Director of Human Resources -->
                 <div class="team-profile">
                     <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Available Profile" class="profile-trigger" data-user="hr">
                     <h3>Available</h3>
@@ -714,32 +990,62 @@
         </div>
     </div>
 
-    <!-- BOTÓN FLOTANTE IA -->
-    <button id="ai-bot-btn" class="ai-bot-btn" onclick="document.getElementById('ai-chat-fs').classList.add('show')">
-        <img src="https://i.postimg.cc/LXxgQc7w/upscalemedia-transformed.png" alt="Aida">
+    <!-- --- BOTÓN FLOTANTE Y VENTANA DE ASISTENTE DE IA --- -->
+    <button id="ai-bot-btn" class="ai-bot-btn">
+        <img src="9143.jpg" alt="Aida Logo" id="bot-icon-img">
+        <i class="fa-solid fa-times" id="close-bot-icon" style="display: none; font-size: 35px; color: #ad1b45;"></i>
     </button>
 
-    <!-- CHAT PANTALLA COMPLETA -->
-    <div id="ai-chat-fs" class="ai-chat-fullscreen">
-        <div class="chat-header-fs">
-            <h2 style="color: #ad1b45; margin:0;">Aida</h2>
-            <button onclick="document.getElementById('ai-chat-fs').classList.remove('show')" style="background:none; border:none; font-size:24px; cursor:pointer;">
-                <i class="fa-solid fa-times"></i>
-            </button>
-        </div>
-        <div class="chat-body-fs" id="fs-chat-content">
-            <div style="background:white; padding:15px; border-radius:10px; margin-bottom:10px;">
-                Hello! I'm Aida, the DHL Group Virtual Assistant. How can I help you?
+    <div id="ai-chat-window" class="ai-chat-window">
+        <div class="chat-header">
+            <div class="header-left">
+                <i class="fa-solid fa-robot header-icon"></i>
+                <h2>Aida</h2>
             </div>
         </div>
-        <div class="chat-input-fs">
-            <input type="text" placeholder="Type your message...">
-            <button class="send-btn"><i class="fa-solid fa-arrow-up"></i></button>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-message bot-message">
+                <p>Hello! I'm Aida, the DHL Global Forwarding Virtual Assistant. I'm here to help you with any queries.</p>
+            </div>
+            <div class="quick-replies">
+                <button><i class="fa-solid fa-search"></i> Track Shipment</button>
+                <button><i class="fa-solid fa-book"></i> Book a Shipment</button>
+                <button><i class="fa-solid fa-calculator"></i> Get a Quote</button>
+                <button><i class="fa-solid fa-envelope"></i> Contact Us</button>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <button class="chat-options-btn"><i class="fa-solid fa-bars"></i></button>
+            <input type="text" id="chat-input" placeholder="Type your message here ...">
+            <button class="chat-voice-btn"><i class="fa-solid fa-microphone"></i></button>
         </div>
     </div>
 
     <script>
-        // CONFIGURACIÓN DE DISCORD OAUTH2 (FRONTEND)
+        // --- LÓGICA DEL MENÚ RESPONSIVE (MÓVIL) ---
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navWrapper = document.getElementById('nav-wrapper');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu() {
+            navWrapper.classList.toggle('open');
+            menuOverlay.classList.toggle('show');
+            document.body.style.overflow = navWrapper.classList.contains('open') ? 'hidden' : 'auto';
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+        
+        // Cerrar menú al hacer clic en un enlace interno
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if(window.innerWidth <= 992) toggleMenu();
+            });
+        });
+
+        // --- DISCORD OAUTH2 ---
         const clientId = '1529215900673380514'; 
         const redirectUri = encodeURIComponent('https://dhl-group.netlify.app/'); 
 
@@ -794,152 +1100,117 @@
             dropdownMenu.classList.remove('show');
         });
 
-        // LÓGICA DEL CUADRO FLOTANTE (MODAL PRIVACIDAD)
+        // --- MODALES (PRIVACIDAD, APLICACIONES, EQUIPO Y PERFIL) ---
         const privacyModal = document.getElementById('privacy-modal');
-        const acceptBtn = document.getElementById('accept-btn');
-        acceptBtn.addEventListener('click', () => {
-            privacyModal.style.display = 'none';
-        });
+        document.getElementById('accept-btn').addEventListener('click', () => privacyModal.style.display = 'none');
 
-        // LÓGICA DEL CUADRO FLOTANTE DE APLICACIONES CERRADAS
         const applyModal = document.getElementById('apply-modal');
-        const applyButtons = document.querySelectorAll('.apply-btn');
-        const closeApplyBtn = document.getElementById('close-apply-btn');
-
-        applyButtons.forEach(btn => {
+        document.querySelectorAll('.apply-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 applyModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             });
         });
-
-        closeApplyBtn.addEventListener('click', () => {
+        document.getElementById('close-apply-btn').addEventListener('click', () => {
             applyModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
 
-        applyModal.addEventListener('click', (e) => {
-            if (e.target === applyModal) {
-                applyModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // LÓGICA DEL DIRECTORIO DEL EQUIPO (MODAL ELEGANTE BLANCO)
         const teamModal = document.getElementById('team-modal');
-        const openTeamBtn = document.getElementById('open-team-btn');
-        const closeTeamBtn = document.getElementById('close-team-btn');
-
-        openTeamBtn.addEventListener('click', () => {
+        document.getElementById('open-team-btn').addEventListener('click', () => {
             teamModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
-
-        closeTeamBtn.addEventListener('click', () => {
+        document.getElementById('close-team-btn').addEventListener('click', () => {
             teamModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
 
-        teamModal.addEventListener('click', (e) => {
-            if (e.target === teamModal) {
-                teamModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // BASE DE DATOS DE INFORMACIÓN DE CADA USUARIO DEL EQUIPO DIRECTIVO
         const teamData = {
-            founder: {
-                name: "Camping_n",
-                role: "Founder",
-                avatar: "https://i.postimg.cc/26L3mZ5Z/image.png",
-                msg1: "\"Wow you are reading this, I´m N the great founder of DHL. Nice to met you ;)\"",
-                msg2: "Conceive the business idea, establish the strategic foundations, and turn the project into a viable entity.",
-                msg3: "Why it is so hard, glad im the founder."
-            },
-            ceo: {
-                name: "Available",
-                role: "CEO",
-                avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
-                msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "The highest authority in the management of a company, responsible for defining the overall strategy, making key decisions, and leading the executive teams.",
-                msg3: "Oh yes, not here either."
-            },
-            operations: {
-                name: "Available",
-                role: "Director of Operations",
-                avatar: "https://cdn.discordapp.com/embed/avatars/1.png",
-                msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "Manages daily activities, optimizes internal processes, and aligns company resources.",
-                msg3: "Oh yes, not here either."
-            },
-            moderators: {
-                name: "Available",
-                role: "Director of Moderators",
-                avatar: "https://cdn.discordapp.com/embed/avatars/2.png",
-                msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "The person responsible for leading teams of moderators, hiring and firing, and defining large-scale strategies for a digital platform or community.",
-                msg3: "Oh yes, not here either."
-            },
-            pr: {
-                name: "Available",
-                role: "Director of Public Relations",
-                avatar: "https://cdn.discordapp.com/embed/avatars/3.png",
-                msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "A leader responsible for creating, protecting, and enhancing a company's public image and reputation. Key responsibilities include designing communication strategies, leading media relations, and managing crisis situations.",
-                msg3: "Oh yes, not here either."
-            },
-            hr: {
-                name: "Available",
-                role: "Director of Human Resources",
-                avatar: "https://cdn.discordapp.com/embed/avatars/4.png",
-                msg1: "\"Blank. Nothing to see here hehe\"",
-                msg2: "Leads a company's human talent strategy, encompassing workforce planning, recruitment, and organizational development.",
-                msg3: "Oh yes, not here either."
-            }
+            founder: { name: "Camping_n", role: "Founder", avatar: "https://i.postimg.cc/26L3mZ5Z/image.png", msg1: "\"Wow you are reading this...\"", msg2: "Conceive the business idea...", msg3: "Why it is so hard, glad im the founder." },
+            ceo: { name: "Available", role: "CEO", avatar: "https://cdn.discordapp.com/embed/avatars/0.png", msg1: "\"Blank...\"", msg2: "The highest authority...", msg3: "Oh yes, not here either." },
+            operations: { name: "Available", role: "Director of Operations", avatar: "https://cdn.discordapp.com/embed/avatars/1.png", msg1: "\"Blank...\"", msg2: "Manages daily activities...", msg3: "Oh yes, not here either." },
+            moderators: { name: "Available", role: "Director of Moderators", avatar: "https://cdn.discordapp.com/embed/avatars/2.png", msg1: "\"Blank...\"", msg2: "Responsible for leading moderators...", msg3: "Oh yes, not here either." },
+            pr: { name: "Available", role: "Director of Public Relations", avatar: "https://cdn.discordapp.com/embed/avatars/3.png", msg1: "\"Blank...\"", msg2: "Creates and protects public image...", msg3: "Oh yes, not here either." },
+            hr: { name: "Available", role: "Director of Human Resources", avatar: "https://cdn.discordapp.com/embed/avatars/4.png", msg1: "\"Blank...\"", msg2: "Leads human talent strategy...", msg3: "Oh yes, not here either." }
         };
 
-        // LÓGICA DE LOS MODALES INDIVIDUALES DE CADA USUARIO
         const profileModal = document.getElementById('profile-modal');
-        const closeProfileBtn = document.getElementById('close-profile-btn');
-        const profileTriggers = document.querySelectorAll('.profile-trigger');
-
-        const modalUserAvatar = document.getElementById('modal-user-avatar');
-        const modalUserName = document.getElementById('modal-user-name');
-        const modalUserRole = document.getElementById('modal-user-role');
-        const modalUserMsg1 = document.getElementById('modal-user-msg1');
-        const modalUserMsg2 = document.getElementById('modal-user-msg2');
-        const modalUserMsg3 = document.getElementById('modal-user-msg3');
-
-        profileTriggers.forEach(trigger => {
+        document.querySelectorAll('.profile-trigger').forEach(trigger => {
             trigger.addEventListener('click', () => {
                 const userId = trigger.getAttribute('data-user');
                 const info = teamData[userId];
-
                 if (info) {
-                    modalUserAvatar.src = info.avatar;
-                    modalUserName.textContent = info.name;
-                    modalUserRole.textContent = info.role;
-                    modalUserMsg1.textContent = info.msg1;
-                    modalUserMsg2.textContent = info.msg2;
-                    modalUserMsg3.textContent = info.msg3;
-
-                    // Ocultamos temporalmente el modal de equipo para mostrar el perfil individual de forma limpia
+                    document.getElementById('modal-user-avatar').src = info.avatar;
+                    document.getElementById('modal-user-name').textContent = info.name;
+                    document.getElementById('modal-user-role').textContent = info.role;
+                    document.getElementById('modal-user-msg1').textContent = info.msg1;
+                    document.getElementById('modal-user-msg2').textContent = info.msg2;
+                    document.getElementById('modal-user-msg3').textContent = info.msg3;
                     teamModal.style.display = 'none';
                     profileModal.style.display = 'flex';
                 }
             });
         });
 
-        closeProfileBtn.addEventListener('click', () => {
+        document.getElementById('close-profile-btn').addEventListener('click', () => {
             profileModal.style.display = 'none';
-            teamModal.style.display = 'flex'; // Regresa al cuadro del equipo directivo
+            teamModal.style.display = 'flex';
         });
 
-        profileModal.addEventListener('click', (e) => {
-            if (e.target === profileModal) {
-                profileModal.style.display = 'none';
-                teamModal.style.display = 'flex';
+        // --- LÓGICA DEL ASISTENTE DE IA ---
+        const aiBotBtn = document.getElementById('ai-bot-btn');
+        const aiChatWindow = document.getElementById('ai-chat-window');
+        const botIconImg = document.getElementById('bot-icon-img');
+        const closeBotIcon = document.getElementById('close-bot-icon');
+        const chatInput = document.getElementById('chat-input');
+        const chatBody = document.getElementById('chat-body');
+
+        function toggleChat() {
+            if (aiChatWindow.classList.contains('show')) {
+                aiChatWindow.classList.remove('show');
+                botIconImg.style.display = 'block';
+                closeBotIcon.style.display = 'none';
+            } else {
+                aiChatWindow.classList.add('show');
+                botIconImg.style.display = 'none';
+                closeBotIcon.style.display = 'block';
+            }
+        }
+
+        aiBotBtn.addEventListener('click', toggleChat);
+
+        // Lógica para enviar mensajes
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text === "") return;
+
+            // Mostrar mensaje del usuario
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-message user-message';
+            userMsg.textContent = text;
+            chatBody.appendChild(userMsg);
+            
+            chatInput.value = "";
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Simular respuesta del bot
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-message bot-message';
+                botMsg.textContent = "Aida: I received: " + text;
+                chatBody.appendChild(botMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 600);
+        }
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (aiChatWindow.classList.contains('show') && !aiChatWindow.contains(e.target) && !aiBotBtn.contains(e.target)) {
+                toggleChat();
             }
         });
     </script>
