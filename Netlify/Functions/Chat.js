@@ -14,14 +14,14 @@ export const handler = async (event, context) => {
             baseURL: 'https://openrouter.ai/api/v1',
             apiKey: process.env.OPENROUTER_API_KEY,
             defaultHeaders: {
-                "HTTP-Referer": "https://tu-sitio.netlify.app/", 
+                "HTTP-Referer": "https://dhl-roblxgroup.netlify.app/", 
                 "X-Title": "DHL Roblox Group Assistant"
             }
         });
 
         const userIdentifier = username ? `@${username}` : "there";
 
-        const systemPrompt = `You are Aida, the DHL Global Forwarding Virtual Assistant for a Roblox community. 
+        const systemPrompt = `You are Aida, the DHL Group Virtual Assistant for a Roblox community. 
         When replying to users, if they are logged in, address them as ${userIdentifier}. 
         Keep your answers helpful, friendly, and related to cargo operations and the official Discord: https://discord.gg/2Vvb87kugf`;
 
@@ -45,7 +45,7 @@ export const handler = async (event, context) => {
         console.error('Error con OpenRouter:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Hubo un error al procesar tu mensaje.' })
+            body: JSON.stringify({ error: 'An error occurred while processing your message.' })
         };
     }
 };
