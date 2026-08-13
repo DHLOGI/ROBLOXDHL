@@ -1,5 +1,9 @@
+
 import { createGroq } from '@ai-sdk/groq';
 import { streamText } from 'ai';
+
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY,
