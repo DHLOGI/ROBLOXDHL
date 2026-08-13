@@ -12,10 +12,10 @@ export async function POST(req: Request) {
       messages,
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
-    console.error('Error en la API de Groq:', error);
-    return new Response(JSON.stringify({ error: 'Error interno en el servidor' }), {
+    console.error('Error en Groq API:', error);
+    return new Response(JSON.stringify({ error: 'Error al conectar con la IA' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
